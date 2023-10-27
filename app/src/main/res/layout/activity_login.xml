@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.LoginActivity">
 
     <TextView
-        android:id="@+id/tv_login_label"
+        android:id="@+id/login_tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
         android:text="Bem vindo ao ServSimples!"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/login_icon_card"
         app:layout_constraintEnd_toEndOf="@+id/login_icon_card"
         app:layout_constraintHorizontal_bias="0.5"
@@ -22,61 +23,62 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="164dp"
+        app:cardCornerRadius="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="20sp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/black"/>
+            android:background="@color/black" />
     </androidx.cardview.widget.CardView>
 
     <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="senha"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextText"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
-
-    <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="wrap_content"
+        android:id="@+id/login_et_username"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:ems="10"
+        android:hint="Nome de usuário"
         android:inputType="text"
-        android:hint="login"
         app:layout_constraintEnd_toEndOf="@+id/login_icon_card"
         app:layout_constraintStart_toStartOf="@+id/login_icon_card"
         app:layout_constraintTop_toBottomOf="@+id/login_icon_card" />
 
+    <EditText
+        android:id="@+id/login_et_password"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Senha"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/login_et_username"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/login_et_username"
+        app:layout_constraintTop_toBottomOf="@+id/login_et_username" />
+
     <Button
-        android:id="@+id/button"
+        android:id="@+id/login_bt_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
-        android:hint="ir"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
+        android:hint="Login"
+        app:layout_constraintEnd_toEndOf="@+id/login_et_password"
         app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintStart_toStartOf="@+id/login_et_password"
+        app:layout_constraintTop_toBottomOf="@+id/login_et_password" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/login_tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="32dp"
         android:text="Registrar"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.RegisterActivity">
+
+    <TextView
+        android:id="@+id/register_tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preencha os campos abaixo"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <EditText
+        android:id="@+id/register_et_name"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="Nome"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/register_tv_info"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="@+id/register_tv_info"
+        app:layout_constraintTop_toBottomOf="@+id/register_tv_info" />
+
+    <EditText
+        android:id="@+id/register_et_cpf"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="CPF"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/register_et_name"
+        app:layout_constraintStart_toStartOf="@+id/register_et_name"
+        app:layout_constraintTop_toBottomOf="@+id/register_et_name" />
+
+    <EditText
+        android:id="@+id/register_et_username"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Nome de usuário"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@+id/register_et_cpf"
+        app:layout_constraintStart_toStartOf="@+id/register_et_cpf"
+        app:layout_constraintTop_toBottomOf="@+id/register_et_cpf" />
+
+    <EditText
+        android:id="@+id/register_et_password_confirmation"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Senha"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/register_et_username"
+        app:layout_constraintStart_toStartOf="@+id/register_et_username"
+        app:layout_constraintTop_toBottomOf="@+id/register_et_username" />
+
+    <EditText
+        android:id="@+id/register_et_password"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Confirmação de senha"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/register_et_password_confirmation"
+        app:layout_constraintStart_toStartOf="@+id/register_et_password_confirmation"
+        app:layout_constraintTop_toBottomOf="@+id/register_et_password_confirmation" />
+
+    <TextView
+        android:id="@+id/register_tv_usertype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Sou prestador de serviços"
+        app:layout_constraintStart_toStartOf="@+id/register_et_password"
+        app:layout_constraintTop_toBottomOf="@+id/register_et_password" />
+
+    <CheckBox
+        android:id="@+id/register_cb_usertype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/register_tv_usertype"
+        app:layout_constraintEnd_toEndOf="@+id/register_et_password"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/register_tv_usertype"
+        app:layout_constraintTop_toTopOf="@+id/register_tv_usertype"
+        app:layout_constraintVertical_bias="0.517" />
+
+    <Button
+        android:id="@+id/register_bt_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_tv_usertype" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
