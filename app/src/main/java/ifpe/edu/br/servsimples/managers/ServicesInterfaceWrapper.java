@@ -17,16 +17,26 @@ public abstract class ServicesInterfaceWrapper {
         @POST("api/register/user")
         Call<User> registerUser(@Body RequestBody requestBody);
 
+        @POST("api/login")
+        Call<User> loginUser(@Body RequestBody requestBody);
+
+        @POST("api/get/user")
+        Call<User> getUser(@Body RequestBody requestBody);
+
+        @POST("/api/update/user")
+        Call<User> updateUser(@Body RequestBody requestBody);
     }
 
     public interface IServSimplesServerManager {
         void registerUser(User user, RegistrationCallback callback);
-
+        void loginUser(User user, RegistrationCallback callback);
+        void getUser(User user, RegistrationCallback callback);
         void unregisterUser(User user, RegistrationCallback callback);
+        void updateUser(User user, RegistrationCallback callback);
     }
 
     public interface RegistrationCallback {
-        void onSuccess(User device);
+        void onSuccess(User user);
 
         void onFailure(String message);
     }
