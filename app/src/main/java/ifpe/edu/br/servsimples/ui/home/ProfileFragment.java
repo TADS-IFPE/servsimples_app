@@ -11,12 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
-
 import ifpe.edu.br.servsimples.R;
+import ifpe.edu.br.servsimples.managers.ServSimplesServerManagerImpl;
+import ifpe.edu.br.servsimples.managers.ServicesInterfaceWrapper;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.ui.LoginActivity;
 import ifpe.edu.br.servsimples.ui.RegisterActivity;
@@ -29,6 +30,8 @@ public class ProfileFragment extends Fragment {
 
     private TextView mLogout;
     private TextView mEditProfile;
+    private TextView mDeleteUser;
+    private TextView mTvUserName;
 
     public ProfileFragment() {
     }
@@ -51,9 +54,56 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        retrieveUserProfileInfo();
+    }
+
+    private void retrieveUserProfileInfo() {
+        ServSimplesServerManagerImpl.getInstance().getUser(PersistHelper.getUser(getContext()),
+                new ServicesInterfaceWrapper.RegistrationCallback() {
+            @Override
+            public void onSuccess(User user) {
+                if (user == null) {
+                    Toast.makeText(getContext(), "Não foi possível recuperar informações do usuário",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                mTvUserName.setText(user.getName());
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+    }
+
     private void setUpListeners() {
         mLogout.setOnClickListener(view -> logOut());
         mEditProfile.setOnClickListener(view -> editProfile());
+        mDeleteUser.setOnClickListener(View -> deleteProfile());
+    }
+
+    private void deleteProfile() {
+        ServSimplesServerManagerImpl.getInstance()
+                .unregisterUser(PersistHelper.getUser(getContext()),
+                        new ServicesInterfaceWrapper.RegistrationCallback() {
+                    @Override
+                    public void onSuccess(User user) {
+                        PersistHelper.saveUserInfo(new User(), getContext());
+                        PersistHelper.setUserLogged(getContext(), false);
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        requireActivity().finish();
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+                        Toast.makeText(getContext(), "Não foi possível deletar o usuário",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void editProfile() {
@@ -72,5 +122,7 @@ public class ProfileFragment extends Fragment {
     private void findViewsById(View view) {
         mLogout = view.findViewById(R.id.tv_profile_miscellaneous_logout);
         mEditProfile = view.findViewById(R.id.tv_profile_miscellaneous_edit_profile);
+        mDeleteUser = view.findViewById(R.id.tv_profile_miscellaneous_delete_profile);
+        mTvUserName = view.findViewById(R.id.tv_profile_name);
     }
 }

@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import ifpe.edu.br.servsimples.R;
+import ifpe.edu.br.servsimples.managers.ServSimplesServerManagerImpl;
 import ifpe.edu.br.servsimples.ui.UIInterfaceWrapper;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 

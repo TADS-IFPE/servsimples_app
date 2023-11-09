@@ -19,7 +19,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_profile_info"
                 android:layout_width="match_parent"
-                android:layout_height="260dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/card_margin"
                 android:outlineAmbientShadowColor="@color/card_forecast_backgound_icon"
                 android:outlineSpotShadowColor="@color/card_forecast_backgound_icon"
@@ -34,7 +34,7 @@
                     android:id="@+id/image_profile_bio_banner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/airpower_banner" />
+                    android:background="@color/servsimples_banner" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                         app:cardCornerRadius="@dimen/card_corner"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.08"
+                        app:layout_constraintHorizontal_bias="0.05"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_profile_bio_label"
                         app:layout_constraintVertical_bias="0.050000012">
@@ -65,6 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Meu Perfil"
+                        android:textColor="@color/servsimples_logo_color_green"
                         android:textSize="@dimen/card_title"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -75,26 +76,32 @@
 
                     <TextView
                         android:id="@+id/tv_profile_name"
-                        android:layout_width="227dp"
-                        android:layout_height="39dp"
-                        android:layout_marginStart="25dp"
-                        android:text="Willian J. Santos"
-                        android:textSize="25sp"
+                        android:layout_width="215dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="15dp"
+                        android:textSize="22sp"
                         app:layout_constraintBottom_toBottomOf="@+id/cardView_profile_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toEndOf="@+id/cardView_profile_icon"
                         app:layout_constraintTop_toTopOf="@+id/cardView_profile_icon"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:text="Willian J. Santos" />
 
                     <TextView
                         android:id="@+id/tv_profile_bio"
-                        android:layout_width="237dp"
-                        android:layout_height="126dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_width="239dp"
+                        android:layout_height="117dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="20dp"
+                        android:autoSizeTextType="uniform"
                         android:text="Sou Engenheiro de Software e estudante do curso de ADS do IFPE campus Recife. Atuo no mercado de trabalho há três anos como desenvolvedor Android embarcado"
-                        app:layout_constraintEnd_toEndOf="@+id/tv_profile_name"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_profile_name"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_name" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_name"
+                        app:layout_constraintVertical_bias="0.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,7 +125,7 @@
                     android:id="@+id/image_profile_miscelaneus_banner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/airpower_banner" />
+                    android:background="@color/servsimples_banner" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -129,6 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Opções"
+                        android:textColor="@color/servsimples_logo_color_green"
                         android:textSize="@dimen/card_title"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

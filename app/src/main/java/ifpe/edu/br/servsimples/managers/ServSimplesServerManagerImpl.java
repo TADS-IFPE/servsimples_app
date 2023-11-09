@@ -134,6 +134,32 @@ public class ServSimplesServerManagerImpl
     public void unregisterUser(User user, ServicesInterfaceWrapper.RegistrationCallback callback) {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "unregisterUser");
+        mConnectionManager
+                .getServSimplesConnection()
+                .create(ServicesInterfaceWrapper.UserServices.class)
+                .removeUser(RequestBody.create(MediaType.parse("application/json"),
+                        new Gson().toJson(user)))
+                .enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> resp) {
+                        if (resp.isSuccessful() && resp.code() == ServSimplesConstants.HTTP_OK) {
+                            callback.onSuccess(resp.body());
+                        } else {
+                            if (ServSimplesAppLogger.ISLOGABLE)
+                                ServSimplesAppLogger.w(TAG, "remove user: status:"
+                                        + resp.code());
+                            callback.onFailure(String.valueOf(resp.code()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                        if (ServSimplesAppLogger.ISLOGABLE)
+                            ServSimplesAppLogger.w(TAG, "getUser: onFailure:"
+                                    + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                });
     }
 
     @Override

@@ -25,6 +25,9 @@ public abstract class ServicesInterfaceWrapper {
 
         @POST("/api/update/user")
         Call<User> updateUser(@Body RequestBody requestBody);
+
+        @POST("/api/unregister/user")
+        Call<User> removeUser(@Body RequestBody requestBody);
     }
 
     public interface IServSimplesServerManager {
