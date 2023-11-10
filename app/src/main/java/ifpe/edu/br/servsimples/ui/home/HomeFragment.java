@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
+
 import ifpe.edu.br.servsimples.R;
 
 
@@ -39,6 +41,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         findViewsByIds(view);
+        requireActivity().setTitle("Início");
         return view;
     }
 

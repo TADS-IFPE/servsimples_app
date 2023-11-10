@@ -15,13 +15,13 @@ import androidx.fragment.app.Fragment;
 import ifpe.edu.br.servsimples.R;
 
 
-public class MyEventsFragment extends Fragment {
+public class ServicesFragment extends Fragment {
 
-    public MyEventsFragment() {
+    public ServicesFragment() {
     }
 
-    public static MyEventsFragment newInstance() {
-        return new MyEventsFragment();
+    public static ServicesFragment newInstance() {
+        return new ServicesFragment();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class MyEventsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_events, container, false);
+        View view = inflater.inflate(R.layout.fragment_services, container, false);
         findViewsById(view);
         setUpListeners();
         return view;

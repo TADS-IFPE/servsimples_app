@@ -42,7 +42,6 @@ public class HomeHolderActivity extends AppCompatActivity
             //        action.equals(ServSimplesConstants.ACTION_LAUNCH_MY_DEVICES)*/) {
             //    mNavigationView.setSelectedItemId(R.id.m2);
             //} else {
-                setTitle("Home");
                 openFragment(HomeFragment.newInstance(), false);
                 lastFragmentOpened = 1;
             //}
@@ -69,21 +68,21 @@ public class HomeHolderActivity extends AppCompatActivity
             int itemId = item.getItemId();
             if (itemId == R.id.m1) {
                 if (lastFragmentOpened != 1) {
-                    actionBar.setTitle("Home");
+                    actionBar.setTitle("Início");
                     Fragment homeFragment = HomeFragment.newInstance();
                     openFragment(homeFragment, false);
                     lastFragmentOpened = 1;
                 }
             } else if (itemId == R.id.m2) {
                 if (lastFragmentOpened != 2) {
-                    actionBar.setTitle("My Devices");
-                    Fragment myDevicesFragment = HomeFragment.newInstance();
+                    actionBar.setTitle("Serviços");
+                    Fragment myDevicesFragment = ServicesFragment.newInstance();
                     openFragment(myDevicesFragment, false);
                     lastFragmentOpened = 2;
                 }
             } else if (itemId == R.id.m3) {
                 if (lastFragmentOpened != 3) {
-                    actionBar.setTitle("Profile");
+                    actionBar.setTitle("Perfil");
                     Fragment profile = ProfileFragment.newInstance();
                     openFragment(profile, false);
                     lastFragmentOpened = 3;

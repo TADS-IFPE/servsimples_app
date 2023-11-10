@@ -6,88 +6,100 @@
     android:layout_height="match_parent"
     tools:context=".ui.LoginActivity">
 
-    <TextView
-        android:id="@+id/login_tv_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-        android:textColor="@color/servsimples_logo_color_green"
-        android:text="Bem vindo ao ServSimples!"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/login_icon_card"
-        app:layout_constraintEnd_toEndOf="@+id/login_icon_card"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/login_icon_card" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/login_icon_card"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="164dp"
-        app:cardCornerRadius="20sp"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/app_launcher_icon"/>
-    </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/login_et_username"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:ems="10"
-        android:hint="Nome de usuário"
-        android:textStyle="bold"
-        android:inputType="text"
-        android:textColor="@color/servsimples_logo_color_green"
-        app:layout_constraintEnd_toEndOf="@+id/login_icon_card"
-        app:layout_constraintStart_toStartOf="@+id/login_icon_card"
-        app:layout_constraintTop_toBottomOf="@+id/login_icon_card" />
+            <TextView
+                android:id="@+id/login_tv_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="75dp"
+                android:text="Bem vindo ao ServSimples!"
+                android:textColor="@color/servsimples_logo_color_green"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/login_et_password"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="Senha"
-        android:textStyle="bold"
-        android:textColor="@color/servsimples_logo_color_green"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/login_et_username"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/login_et_username"
-        app:layout_constraintTop_toBottomOf="@+id/login_et_username" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/login_icon_card"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="55dp"
+                android:layout_marginBottom="56dp"
+                app:cardCornerRadius="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/login_et_username"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/login_tv_label">
 
-    <Button
-        android:id="@+id/login_bt_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:hint="Login"
-        android:textColor="@color/servsimples_logo_color_green"
-        app:layout_constraintEnd_toEndOf="@+id/login_et_password"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="@+id/login_et_password"
-        app:layout_constraintTop_toBottomOf="@+id/login_et_password" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/app_launcher_icon" />
+            </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/login_tv_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="32dp"
-        android:text="Registrar"
-        android:textStyle="bold"
-        android:textColor="@color/servsimples_logo_color_green"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <EditText
+                android:id="@+id/login_et_username"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Nome de usuário"
+                android:inputType="text"
+                android:textColor="@color/servsimples_logo_color_green"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/login_et_password"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:ems="10"
+                android:hint="Senha"
+                android:inputType="textPassword"
+                android:textColor="@color/servsimples_logo_color_green"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/login_et_username" />
+
+            <Button
+                android:id="@+id/login_bt_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="52dp"
+                android:hint="Login"
+                android:textColor="@color/servsimples_logo_color_green"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/login_et_password" />
+
+            <TextView
+                android:id="@+id/login_tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="28dp"
+                android:text="Registrar"
+                android:textColor="@color/servsimples_logo_color_green"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

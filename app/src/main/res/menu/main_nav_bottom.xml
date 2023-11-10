@@ -4,18 +4,18 @@
         android:id="@+id/m1"
         android:enabled="true"
         android:icon="@drawable/home_icon"
-        android:title="Home" />
+        android:title="Início" />
 
     <item
         android:id="@+id/m2"
         android:enabled="true"
         android:icon="@drawable/dashboard_icon"
-        android:title="Sem nome" />
+        android:title="Serviços" />
 
     <item
         android:id="@+id/m3"
         android:enabled="true"
         android:icon="@drawable/menu_icon"
-        android:title="Profile" />
+        android:title="Perfil" />
 
 </menu>
