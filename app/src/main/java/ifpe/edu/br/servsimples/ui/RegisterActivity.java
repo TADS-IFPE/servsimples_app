@@ -16,8 +16,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ifpe.edu.br.servsimples.R;
-import ifpe.edu.br.servsimples.managers.ServSimplesServerManagerImpl;
-import ifpe.edu.br.servsimples.managers.ServicesInterfaceWrapper;
+import ifpe.edu.br.servsimples.managers.IServerManagerInterfaceWrapper;
+import ifpe.edu.br.servsimples.managers.ServSimplesServerManager;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.ui.home.HomeHolderActivity;
 import ifpe.edu.br.servsimples.util.PersistHelper;
@@ -36,14 +36,14 @@ public class RegisterActivity extends AppCompatActivity {
     private CheckBox mCbIsProfessionalUser;
     private static boolean isUpdateUserAction = false;
 
-    private ServSimplesServerManagerImpl mServSimplesServerManager;
+    private ServSimplesServerManager mServSimplesServerManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        mServSimplesServerManager = ServSimplesServerManagerImpl.getInstance();
+        mServSimplesServerManager = ServSimplesServerManager.getInstance();
         findViews();
         Intent intent = getIntent();
         if (intent != null && ServSimplesConstants.ACTION_EDIT_PROFILE.equals(intent.getAction())) {
@@ -92,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
                     User.UserType.PROFESSIONAL : User.UserType.USER);
 
             mServSimplesServerManager.registerUser(user,
-                    new ServicesInterfaceWrapper.RegistrationCallback() {
+                    new IServerManagerInterfaceWrapper.serverRequestCallback() {
                         @Override
                         public void onSuccess(User user) {
                             if (user == null) {
@@ -131,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void retrieveUserInfo(User user) {
         mServSimplesServerManager.getUser(user,
-                new ServicesInterfaceWrapper.RegistrationCallback() {
+                new IServerManagerInterfaceWrapper.serverRequestCallback() {
                     @Override
                     public void onSuccess(User user) {
                         mEtCPF.setText(user.getCpf());
@@ -173,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
                     User.UserType.PROFESSIONAL : User.UserType.USER);
 
             mServSimplesServerManager.updateUser(editUser,
-                    new ServicesInterfaceWrapper.RegistrationCallback() {
+                    new IServerManagerInterfaceWrapper.serverRequestCallback() {
                         @Override
                         public void onSuccess(User user) {
                             PersistHelper.saveUserInfo(user, getApplicationContext());
@@ -254,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (isUpdateUserAction) {
                     user.setToken(PersistHelper.getUser(getApplicationContext()).getToken());
                     mServSimplesServerManager.updateUser(user,
-                            new ServicesInterfaceWrapper.RegistrationCallback() {
+                            new IServerManagerInterfaceWrapper.serverRequestCallback() {
                                 @Override
                                 public void onSuccess(User user) {
                                     PersistHelper.saveUserInfo(user, getApplicationContext());
@@ -269,7 +269,7 @@ public class RegisterActivity extends AppCompatActivity {
                             });
                 } else {
                     mServSimplesServerManager.registerUser(user,
-                            new ServicesInterfaceWrapper.RegistrationCallback() {
+                            new IServerManagerInterfaceWrapper.serverRequestCallback() {
                                 @Override
                                 public void onSuccess(User user) {
                                     if (user == null) {

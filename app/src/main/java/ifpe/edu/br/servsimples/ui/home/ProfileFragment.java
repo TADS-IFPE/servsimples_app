@@ -16,8 +16,8 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import ifpe.edu.br.servsimples.R;
-import ifpe.edu.br.servsimples.managers.ServSimplesServerManagerImpl;
-import ifpe.edu.br.servsimples.managers.ServicesInterfaceWrapper;
+import ifpe.edu.br.servsimples.managers.IServerManagerInterfaceWrapper;
+import ifpe.edu.br.servsimples.managers.ServSimplesServerManager;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.ui.LoginActivity;
 import ifpe.edu.br.servsimples.ui.RegisterActivity;
@@ -61,23 +61,23 @@ public class ProfileFragment extends Fragment {
     }
 
     private void retrieveUserProfileInfo() {
-        ServSimplesServerManagerImpl.getInstance().getUser(PersistHelper.getUser(getContext()),
-                new ServicesInterfaceWrapper.RegistrationCallback() {
-            @Override
-            public void onSuccess(User user) {
-                if (user == null) {
-                    Toast.makeText(getContext(), "Não foi possível recuperar informações do usuário",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                mTvUserName.setText(user.getName());
-            }
+        ServSimplesServerManager.getInstance().getUser(PersistHelper.getUser(getContext()),
+                new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                    @Override
+                    public void onSuccess(User user) {
+                        if (user == null) {
+                            Toast.makeText(getContext(), "Não foi possível recuperar informações do usuário",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        mTvUserName.setText(user.getName());
+                    }
 
-            @Override
-            public void onFailure(String message) {
+                    @Override
+                    public void onFailure(String message) {
 
-            }
-        });
+                    }
+                });
     }
 
     private void setUpListeners() {
@@ -87,23 +87,23 @@ public class ProfileFragment extends Fragment {
     }
 
     private void deleteProfile() {
-        ServSimplesServerManagerImpl.getInstance()
+        ServSimplesServerManager.getInstance()
                 .unregisterUser(PersistHelper.getUser(getContext()),
-                        new ServicesInterfaceWrapper.RegistrationCallback() {
-                    @Override
-                    public void onSuccess(User user) {
-                        PersistHelper.saveUserInfo(new User(), getContext());
-                        PersistHelper.setUserLogged(getContext(), false);
-                        startActivity(new Intent(getActivity(), LoginActivity.class));
-                        requireActivity().finish();
-                    }
+                        new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                            @Override
+                            public void onSuccess(User user) {
+                                PersistHelper.saveUserInfo(new User(), getContext());
+                                PersistHelper.setUserLogged(getContext(), false);
+                                startActivity(new Intent(getActivity(), LoginActivity.class));
+                                requireActivity().finish();
+                            }
 
-                    @Override
-                    public void onFailure(String message) {
-                        Toast.makeText(getContext(), "Não foi possível deletar o usuário",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                            @Override
+                            public void onFailure(String message) {
+                                Toast.makeText(getContext(), "Não foi possível deletar o usuário",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
     }
 
     private void editProfile() {

@@ -7,6 +7,8 @@ package ifpe.edu.br.servsimples.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +18,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import ifpe.edu.br.servsimples.R;
-import ifpe.edu.br.servsimples.managers.ServSimplesServerManagerImpl;
 import ifpe.edu.br.servsimples.ui.UIInterfaceWrapper;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 
@@ -42,12 +43,18 @@ public class HomeHolderActivity extends AppCompatActivity
             //        action.equals(ServSimplesConstants.ACTION_LAUNCH_MY_DEVICES)*/) {
             //    mNavigationView.setSelectedItemId(R.id.m2);
             //} else {
-                openFragment(HomeFragment.newInstance(), false);
-                lastFragmentOpened = 1;
+            openFragment(HomeFragment.newInstance(), false);
+            lastFragmentOpened = 1;
             //}
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.service_options_menu, menu);
+        return true;
+    }
     private void setListeners() {
 
     }

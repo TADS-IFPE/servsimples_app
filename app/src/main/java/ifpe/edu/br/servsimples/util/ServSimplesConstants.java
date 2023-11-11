@@ -13,4 +13,5 @@ public interface ServSimplesConstants {
     int HTTP_OK = HttpsURLConnection.HTTP_OK;
 
     String ACTION_EDIT_PROFILE = "servsimples.com.action_edit_profile";
+    String ACTION_EDIT_SERVICE = "servsimples.com.action_edit_service";
 }

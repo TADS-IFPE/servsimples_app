@@ -50,6 +50,10 @@ public class User {
         return services;
     }
 
+    public void addService(Service service) {
+        services.add(service);
+    }
+
     public String getName() {
         return name;
     }

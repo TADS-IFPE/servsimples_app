@@ -5,22 +5,20 @@
  */
 package ifpe.edu.br.servsimples.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import ifpe.edu.br.servsimples.R;
-import ifpe.edu.br.servsimples.managers.ServSimplesServerManagerImpl;
-import ifpe.edu.br.servsimples.managers.ServicesInterfaceWrapper;
+import ifpe.edu.br.servsimples.managers.IServerManagerInterfaceWrapper;
+import ifpe.edu.br.servsimples.managers.ServSimplesServerManager;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.ui.home.HomeHolderActivity;
-import ifpe.edu.br.servsimples.util.CryptoUtils;
 import ifpe.edu.br.servsimples.util.PersistHelper;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 
@@ -32,13 +30,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mTvPassword;
     private Button mBtLogin;
 
-    private ServSimplesServerManagerImpl mServSimplesServerManager;
+    private ServSimplesServerManager mServSimplesServerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mServSimplesServerManager = ServSimplesServerManagerImpl.getInstance();
+        mServSimplesServerManager = ServSimplesServerManager.getInstance();
         findViews();
         setListeners();
     }
@@ -65,23 +63,23 @@ public class LoginActivity extends AppCompatActivity {
             user.setUserName(userName);
             user.setPassword(password);
             mServSimplesServerManager.loginUser(user,
-                    new ServicesInterfaceWrapper.RegistrationCallback() {
-                @Override
-                public void onSuccess(User user) {
-                    if (ServSimplesAppLogger.ISLOGABLE)
-                        ServSimplesAppLogger.d(TAG, "onSuccess: cpf:" + user.getCpf());
-                    PersistHelper.saveUserInfo(user, getApplicationContext());
-                    PersistHelper.setUserLogged(getApplicationContext(), true);
-                    startActivity(new Intent(LoginActivity.this,
-                            HomeHolderActivity.class));
-                    finish();
-                }
+                    new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                        @Override
+                        public void onSuccess(User user) {
+                            if (ServSimplesAppLogger.ISLOGABLE)
+                                ServSimplesAppLogger.d(TAG, "onSuccess: cpf:" + user.getCpf());
+                            PersistHelper.saveUserInfo(user, getApplicationContext());
+                            PersistHelper.setUserLogged(getApplicationContext(), true);
+                            startActivity(new Intent(LoginActivity.this,
+                                    HomeHolderActivity.class));
+                            finish();
+                        }
 
-                @Override
-                public void onFailure(String message) {
+                        @Override
+                        public void onFailure(String message) {
 
-                }
-            });
+                        }
+                    });
         });
 
         mTVRegister.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));

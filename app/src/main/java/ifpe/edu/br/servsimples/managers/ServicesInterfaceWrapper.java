@@ -30,18 +30,21 @@ public abstract class ServicesInterfaceWrapper {
         Call<User> removeUser(@Body RequestBody requestBody);
     }
 
-    public interface IServSimplesServerManager {
-        void registerUser(User user, RegistrationCallback callback);
-        void loginUser(User user, RegistrationCallback callback);
-        void getUser(User user, RegistrationCallback callback);
-        void unregisterUser(User user, RegistrationCallback callback);
-        void updateUser(User user, RegistrationCallback callback);
+    interface ServiceServices {
+        @POST("/api/register/service")
+        Call<User> registerService(@Body RequestBody requestBody);
+
+        @POST("api/get/service")
+        Call<User> getService(@Body RequestBody requestBody);
+
+        @POST("/api/update/service")
+        Call<User> updateService(@Body RequestBody requestBody);
+
+        @POST("/api/unregister/service")
+        Call<User> removeService(@Body RequestBody requestBody);
     }
 
-    public interface RegistrationCallback {
-        void onSuccess(User user);
+    interface EventServices {
 
-        void onFailure(String message);
     }
-
 }
