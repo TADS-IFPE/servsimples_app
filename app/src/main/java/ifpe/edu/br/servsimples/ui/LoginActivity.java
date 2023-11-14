@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             user.setUserName(userName);
             user.setPassword(password);
             mServSimplesServerManager.loginUser(user,
-                    new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                    new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                         @Override
                         public void onSuccess(User user) {
                             if (ServSimplesAppLogger.ISLOGABLE)

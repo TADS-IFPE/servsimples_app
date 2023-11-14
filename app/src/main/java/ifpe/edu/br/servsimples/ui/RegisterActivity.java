@@ -92,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
                     User.UserType.PROFESSIONAL : User.UserType.USER);
 
             mServSimplesServerManager.registerUser(user,
-                    new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                    new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                         @Override
                         public void onSuccess(User user) {
                             if (user == null) {
@@ -131,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void retrieveUserInfo(User user) {
         mServSimplesServerManager.getUser(user,
-                new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                     @Override
                     public void onSuccess(User user) {
                         mEtCPF.setText(user.getCpf());
@@ -173,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
                     User.UserType.PROFESSIONAL : User.UserType.USER);
 
             mServSimplesServerManager.updateUser(editUser,
-                    new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                    new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                         @Override
                         public void onSuccess(User user) {
                             PersistHelper.saveUserInfo(user, getApplicationContext());
@@ -254,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (isUpdateUserAction) {
                     user.setToken(PersistHelper.getUser(getApplicationContext()).getToken());
                     mServSimplesServerManager.updateUser(user,
-                            new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                            new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                                 @Override
                                 public void onSuccess(User user) {
                                     PersistHelper.saveUserInfo(user, getApplicationContext());
@@ -269,7 +269,7 @@ public class RegisterActivity extends AppCompatActivity {
                             });
                 } else {
                     mServSimplesServerManager.registerUser(user,
-                            new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                            new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                                 @Override
                                 public void onSuccess(User user) {
                                     if (user == null) {

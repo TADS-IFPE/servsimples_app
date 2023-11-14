@@ -5,34 +5,45 @@ package ifpe.edu.br.servsimples.managers;
  * Project: ServSimplesApp
  */
 
+import java.util.List;
+
 import ifpe.edu.br.servsimples.model.User;
 
 public class IServerManagerInterfaceWrapper {
 
     public interface IServerUserManager {
         void registerUser(User user,
-                          serverRequestCallback callback);
+                          ServerRequestCallback callback);
 
         void loginUser(User user,
-                       serverRequestCallback callback);
+                       ServerRequestCallback callback);
 
         void getUser(User user,
-                     serverRequestCallback callback);
+                     ServerRequestCallback callback);
 
         void unregisterUser(User user,
-                            serverRequestCallback callback);
+                            ServerRequestCallback callback);
 
         void updateUser(User user,
-                        serverRequestCallback callback);
+                        ServerRequestCallback callback);
 
     }
 
     public interface IServerServiceManager {
         void registerService(User user,
-                             serverRequestCallback registrationCallback);
+                             ServerRequestCallback registrationCallback);
+
+        void getServiceCategories(User user,
+                                  ServerCategoriesCallback categoriesCallback);
     }
 
-    public interface serverRequestCallback {
+    public interface ServerCategoriesCallback {
+        void onSuccess(List<String> categories);
+
+        void onFailure(String message);
+    }
+
+    public interface ServerRequestCallback {
         void onSuccess(User user);
 
         void onFailure(String message);

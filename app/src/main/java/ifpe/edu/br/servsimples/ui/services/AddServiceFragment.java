@@ -6,6 +6,9 @@
 package ifpe.edu.br.servsimples.ui.services;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ifpe.edu.br.servsimples.R;
@@ -33,6 +37,9 @@ import ifpe.edu.br.servsimples.util.ServSimplesConstants;
 public class AddServiceFragment extends Fragment {
 
     private static final String TAG = AddServiceFragment.class.getSimpleName();
+    private static final int GET_CATEGORIES_OK = 0;
+    private static final int GET_CATEGORIES_FAIL = 1;
+
     private EditText mEtNome;
     private Spinner mSpCategory;
     private EditText mEtDescription;
@@ -40,6 +47,23 @@ public class AddServiceFragment extends Fragment {
     private EditText mEtCostTime;
     private Button mBtSubmit;
     private static String sAction;
+    private List<String> mCategories = new ArrayList<>(Arrays.asList("aaa", "bbb", "cccc"));
+    private CategoriesAdapter mCategoriesAdapter;
+
+    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
+        public void handleMessage(Message message) {
+            final int what = message.what;
+            switch (what) {
+                case GET_CATEGORIES_OK:
+                    mCategoriesAdapter = new CategoriesAdapter(getContext(), mCategories);
+                    mSpCategory.setAdapter(mCategoriesAdapter);
+                    break;
+                case GET_CATEGORIES_FAIL:
+                    break;
+            }
+
+        }
+    };
 
 
     public AddServiceFragment() {
@@ -57,6 +81,22 @@ public class AddServiceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new Thread(() -> {
+            ServSimplesServerManager.getInstance()
+                    .getServiceCategories(PersistHelper.getUser(getContext()),
+                            new IServerManagerInterfaceWrapper.ServerCategoriesCallback() {
+                                @Override
+                                public void onSuccess(List<String> categories) {
+                                    mCategories = categories;
+                                    mHandler.sendEmptyMessage(GET_CATEGORIES_OK);
+                                }
+
+                                @Override
+                                public void onFailure(String message) {
+                                    mHandler.sendEmptyMessage(GET_CATEGORIES_FAIL);
+                                }
+                            });
+        }).start();
     }
 
     @Override
@@ -90,7 +130,7 @@ public class AddServiceFragment extends Fragment {
             user.addService(service);
             ServSimplesServerManager.getInstance()
                     .registerService(user,
-                            new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                            new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                                 @Override
                                 public void onSuccess(User user) {
                                     if (user == null) {

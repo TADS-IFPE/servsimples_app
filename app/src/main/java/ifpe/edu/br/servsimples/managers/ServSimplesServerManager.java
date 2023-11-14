@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 import ifpe.edu.br.servsimples.util.ServSimplesConstants;
@@ -38,7 +40,7 @@ public class ServSimplesServerManager
     }
 
     @Override
-    public void registerUser(User user, IServerManagerInterfaceWrapper.serverRequestCallback callback) {
+    public void registerUser(User user, IServerManagerInterfaceWrapper.ServerRequestCallback callback) {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "registerUser");
         mConnectionManager
@@ -70,7 +72,7 @@ public class ServSimplesServerManager
     }
 
     @Override
-    public void loginUser(User user, IServerManagerInterfaceWrapper.serverRequestCallback callback) {
+    public void loginUser(User user, IServerManagerInterfaceWrapper.ServerRequestCallback callback) {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "loginUser");
         mConnectionManager
@@ -102,7 +104,7 @@ public class ServSimplesServerManager
     }
 
     @Override
-    public void getUser(User user, IServerManagerInterfaceWrapper.serverRequestCallback callback) {
+    public void getUser(User user, IServerManagerInterfaceWrapper.ServerRequestCallback callback) {
         mConnectionManager
                 .getServSimplesConnection()
                 .create(ServicesInterfaceWrapper.UserServices.class)
@@ -132,7 +134,7 @@ public class ServSimplesServerManager
     }
 
     @Override
-    public void unregisterUser(User user, IServerManagerInterfaceWrapper.serverRequestCallback callback) {
+    public void unregisterUser(User user, IServerManagerInterfaceWrapper.ServerRequestCallback callback) {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "unregisterUser");
         mConnectionManager
@@ -164,7 +166,7 @@ public class ServSimplesServerManager
     }
 
     @Override
-    public void updateUser(User user, IServerManagerInterfaceWrapper.serverRequestCallback callback) {
+    public void updateUser(User user, IServerManagerInterfaceWrapper.ServerRequestCallback callback) {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "updateUser");
         mConnectionManager
@@ -196,7 +198,7 @@ public class ServSimplesServerManager
     }
 
     @Override
-    public void registerService(User user, IServerManagerInterfaceWrapper.serverRequestCallback callback) {
+    public void registerService(User user, IServerManagerInterfaceWrapper.ServerRequestCallback callback) {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "registerService");
         mConnectionManager
@@ -227,4 +229,38 @@ public class ServSimplesServerManager
                 });
     }
 
+    @Override
+    public void getServiceCategories(User user,
+                                     IServerManagerInterfaceWrapper.ServerCategoriesCallback callback) {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "getServiceCategories");
+        mConnectionManager
+                .getServSimplesConnection()
+                .create(ServicesInterfaceWrapper.ServiceServices.class)
+                .getServiceCategories(RequestBody.create(MediaType.parse("application/json"),
+                        new Gson().toJson(user)))
+                .enqueue(new Callback<List<String>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<List<String>> call,
+                                           @NonNull Response<List<String>> resp) {
+                        if (resp.isSuccessful() && resp.code() == ServSimplesConstants.HTTP_OK) {
+                            callback.onSuccess(resp.body());
+                        } else {
+                            if (ServSimplesAppLogger.ISLOGABLE)
+                                ServSimplesAppLogger.w(TAG, "get categories: status:"
+                                        + resp.code());
+                            callback.onFailure(String.valueOf(resp.code()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<List<String>> call,
+                                          @NonNull Throwable t) {
+                        if (ServSimplesAppLogger.ISLOGABLE)
+                            ServSimplesAppLogger.w(TAG, "getUser: onFailure:"
+                                    + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                });
+    }
 }

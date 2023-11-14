@@ -5,6 +5,8 @@
  */
 package ifpe.edu.br.servsimples.managers;
 
+import java.util.List;
+
 import ifpe.edu.br.servsimples.model.User;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -36,6 +38,9 @@ public abstract class ServicesInterfaceWrapper {
 
         @POST("api/get/service")
         Call<User> getService(@Body RequestBody requestBody);
+
+        @POST("api/get/service/categories")
+        Call<List<String>> getServiceCategories(@Body RequestBody requestBody);
 
         @POST("/api/update/service")
         Call<User> updateService(@Body RequestBody requestBody);

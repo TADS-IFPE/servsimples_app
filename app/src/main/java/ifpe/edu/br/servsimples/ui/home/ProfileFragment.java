@@ -62,7 +62,7 @@ public class ProfileFragment extends Fragment {
 
     private void retrieveUserProfileInfo() {
         ServSimplesServerManager.getInstance().getUser(PersistHelper.getUser(getContext()),
-                new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                     @Override
                     public void onSuccess(User user) {
                         if (user == null) {
@@ -89,7 +89,7 @@ public class ProfileFragment extends Fragment {
     private void deleteProfile() {
         ServSimplesServerManager.getInstance()
                 .unregisterUser(PersistHelper.getUser(getContext()),
-                        new IServerManagerInterfaceWrapper.serverRequestCallback() {
+                        new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                             @Override
                             public void onSuccess(User user) {
                                 PersistHelper.saveUserInfo(new User(), getContext());
