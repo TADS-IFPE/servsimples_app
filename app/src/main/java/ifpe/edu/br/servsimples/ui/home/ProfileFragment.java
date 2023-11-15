@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import ifpe.edu.br.servsimples.R;
 import ifpe.edu.br.servsimples.managers.IServerManagerInterfaceWrapper;
-import ifpe.edu.br.servsimples.managers.ServSimplesServerManager;
+import ifpe.edu.br.servsimples.managers.ServerManager;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.ui.LoginActivity;
 import ifpe.edu.br.servsimples.ui.RegisterActivity;
@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void retrieveUserProfileInfo() {
-        ServSimplesServerManager.getInstance().getUser(PersistHelper.getUser(getContext()),
+        ServerManager.getInstance().getUser(PersistHelper.getUser(getContext()),
                 new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                     @Override
                     public void onSuccess(User user) {
@@ -87,7 +87,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void deleteProfile() {
-        ServSimplesServerManager.getInstance()
+        ServerManager.getInstance()
                 .unregisterUser(PersistHelper.getUser(getContext()),
                         new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                             @Override

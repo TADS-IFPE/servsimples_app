@@ -20,18 +20,19 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import ifpe.edu.br.servsimples.R;
 import ifpe.edu.br.servsimples.managers.IServerManagerInterfaceWrapper;
-import ifpe.edu.br.servsimples.managers.ServSimplesServerManager;
+import ifpe.edu.br.servsimples.managers.ServerManager;
 import ifpe.edu.br.servsimples.model.Cost;
 import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.util.PersistHelper;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 import ifpe.edu.br.servsimples.util.ServSimplesConstants;
+import ifpe.edu.br.servsimples.util.ServerResponseCodeParser;
 
 
 public class AddServiceFragment extends Fragment {
@@ -47,7 +48,7 @@ public class AddServiceFragment extends Fragment {
     private EditText mEtCostTime;
     private Button mBtSubmit;
     private static String sAction;
-    private List<String> mCategories = new ArrayList<>(Arrays.asList("aaa", "bbb", "cccc"));
+    private List<String> mCategories = new ArrayList<>(Collections.singletonList("Default"));
     private CategoriesAdapter mCategoriesAdapter;
 
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
@@ -59,6 +60,7 @@ public class AddServiceFragment extends Fragment {
                     mSpCategory.setAdapter(mCategoriesAdapter);
                     break;
                 case GET_CATEGORIES_FAIL:
+                    requireActivity().finish();
                     break;
             }
 
@@ -70,6 +72,7 @@ public class AddServiceFragment extends Fragment {
     }
 
     public static AddServiceFragment newInstance() {
+        sAction = null;
         return new AddServiceFragment();
     }
 
@@ -82,7 +85,7 @@ public class AddServiceFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new Thread(() -> {
-            ServSimplesServerManager.getInstance()
+            ServerManager.getInstance()
                     .getServiceCategories(PersistHelper.getUser(getContext()),
                             new IServerManagerInterfaceWrapper.ServerCategoriesCallback() {
                                 @Override
@@ -93,6 +96,9 @@ public class AddServiceFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(String message) {
+                                    Toast.makeText(getContext(),
+                                            ServerResponseCodeParser.parseToString(message),
+                                            Toast.LENGTH_SHORT).show();
                                     mHandler.sendEmptyMessage(GET_CATEGORIES_FAIL);
                                 }
                             });
@@ -128,7 +134,7 @@ public class AddServiceFragment extends Fragment {
             User user = PersistHelper.getUser(getContext());
             Service service = getServiceFromView();
             user.addService(service);
-            ServSimplesServerManager.getInstance()
+            ServerManager.getInstance()
                     .registerService(user,
                             new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                                 @Override
@@ -146,8 +152,9 @@ public class AddServiceFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(String message) {
-                                    Toast.makeText(getContext(), "Não foi possível registrar o serviço no momento:"
-                                            + message, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(),
+                                            ServerResponseCodeParser.parseToString(message),
+                                            Toast.LENGTH_LONG).show();
                                 }
                             });
         });

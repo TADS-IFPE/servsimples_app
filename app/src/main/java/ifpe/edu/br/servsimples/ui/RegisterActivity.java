@@ -17,12 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ifpe.edu.br.servsimples.R;
 import ifpe.edu.br.servsimples.managers.IServerManagerInterfaceWrapper;
-import ifpe.edu.br.servsimples.managers.ServSimplesServerManager;
+import ifpe.edu.br.servsimples.managers.ServerManager;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.ui.home.HomeHolderActivity;
 import ifpe.edu.br.servsimples.util.PersistHelper;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 import ifpe.edu.br.servsimples.util.ServSimplesConstants;
+import ifpe.edu.br.servsimples.util.ServerResponseCodeParser;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -36,14 +37,14 @@ public class RegisterActivity extends AppCompatActivity {
     private CheckBox mCbIsProfessionalUser;
     private static boolean isUpdateUserAction = false;
 
-    private ServSimplesServerManager mServSimplesServerManager;
+    private ServerManager mServSimplesServerManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        mServSimplesServerManager = ServSimplesServerManager.getInstance();
+        mServSimplesServerManager = ServerManager.getInstance();
         findViews();
         Intent intent = getIntent();
         if (intent != null && ServSimplesConstants.ACTION_EDIT_PROFILE.equals(intent.getAction())) {
@@ -110,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(String message) {
                             Toast.makeText(RegisterActivity.this,
-                                    "Não foi possível registrar o usuário",
+                                    ServerResponseCodeParser.parseToString(message),
                                     Toast.LENGTH_LONG).show();
                         }
                     });
