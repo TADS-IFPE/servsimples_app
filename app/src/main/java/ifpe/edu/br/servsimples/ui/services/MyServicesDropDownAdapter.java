@@ -15,63 +15,59 @@ import android.widget.TextView;
 import java.util.List;
 
 import ifpe.edu.br.servsimples.R;
+import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 
-public class CategoriesAdapter extends BaseAdapter {
+public class MyServicesDropDownAdapter extends BaseAdapter {
 
-    private static final String TAG = CategoriesAdapter.class.getSimpleName();
-    private final List<String> mCategories;
+    private static final String TAG = MyServicesDropDownAdapter.class.getSimpleName();
     private final Context mContext;
+    private List<Service> mServices;
 
-    public CategoriesAdapter(Context context, List<String> categories) {
-        if (categories == null) {
+    public MyServicesDropDownAdapter(Context context, List<Service> services) {
+        if (services == null) {
             if (ServSimplesAppLogger.ISLOGABLE) {
                 ServSimplesAppLogger.e(TAG, "can't set adapter");
             }
         }
         this.mContext = context;
-        this.mCategories = categories;
+        this.mServices = services;
     }
 
     @Override
     public int getCount() {
-        return mCategories.size();
+        return mServices.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return mCategories.get(i);
+    public Service getItem(int position) {
+        return mServices.get(position);
     }
 
     @Override
-    public long getItemId(int i) {
+    public long getItemId(int position) {
         return 0;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v;
-        CategoriesAdapter.ViewHolder holder;
+        MyServicesDropDownAdapter.ViewHolder holder;
         if (view == null) {
             v =  LayoutInflater.from(mContext)
-                    .inflate(R.layout.categories_drowpdown_item, viewGroup, false);
-            holder = new CategoriesAdapter.ViewHolder();
-            holder.categoryName = v.findViewById(R.id.categories_dropdown_item_name);
+                    .inflate(R.layout.myservices_dropdown_item, viewGroup, false);
+            holder = new MyServicesDropDownAdapter.ViewHolder();
+            holder.serviceName = v.findViewById(R.id.myservices_dropdownitem_name);
             v.setTag(holder);
         } else {
             v = view;
-            holder = (CategoriesAdapter.ViewHolder) view.getTag();
+            holder = (MyServicesDropDownAdapter.ViewHolder) view.getTag();
         }
-        holder.categoryName.setText(mCategories.get(i));
+        holder.serviceName.setText(mServices.get(i).getName());
         return v;
     }
 
     private static class ViewHolder {
-        private TextView categoryName;
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
+        private TextView serviceName;
     }
 }

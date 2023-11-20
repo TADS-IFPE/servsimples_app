@@ -19,4 +19,12 @@ public class Cost {
     public void setTime(String time) {
         this.time = time;
     }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getTime() {
+        return time;
+    }
 }

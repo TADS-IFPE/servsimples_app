@@ -5,7 +5,6 @@
  */
 package ifpe.edu.br.servsimples.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 import ifpe.edu.br.servsimples.R;
-import ifpe.edu.br.servsimples.ui.services.ServicesHolderActivity;
 
 
 public class ServicesFragment extends Fragment {
@@ -50,7 +48,7 @@ public class ServicesFragment extends Fragment {
     }
 
     private void performAddService() {
-        startActivity(new Intent(getActivity(), ServicesHolderActivity.class));
+        //startActivity(new Intent(getActivity(), ServicesHolderActivity.class));
     }
 
     private void findViewsById(View view) {

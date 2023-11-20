@@ -108,7 +108,249 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_miscelaneous_info"
+                android:id="@+id/card_services_info"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:layout_margin="@dimen/card_margin"
+                android:outlineAmbientShadowColor="@color/card_forecast_backgound_icon"
+                android:outlineSpotShadowColor="@color/card_forecast_backgound_icon"
+                app:cardCornerRadius="@dimen/card_corner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/servsimples_banner" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_services_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Meus Serviços"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        android:textSize="@dimen/card_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.500"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.080" />
+
+                    <Spinner
+                        android:id="@+id/sp_services"
+                        android:layout_width="310dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_services_label" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_name_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Nome:"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/sp_services"
+                        app:layout_constraintTop_toBottomOf="@+id/sp_services" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_name"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_profile_services_name_label"
+                        app:layout_constraintStart_toEndOf="@+id/tv_profile_services_name_label"
+                        app:layout_constraintTop_toTopOf="@+id/tv_profile_services_name_label"
+                        tools:text="Nome do serviço" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_category_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Categoria"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintStart_toStartOf="@+id/tv_profile_services_name_label"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_services_name_label" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_category"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_profile_services_category_label"
+                        app:layout_constraintStart_toEndOf="@+id/tv_profile_services_category_label"
+                        app:layout_constraintTop_toTopOf="@+id/tv_profile_services_category_label"
+                        tools:text="Categoria do serviço" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_description_label"
+                        android:layout_width="95dp"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Descrição do Serviço:"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintStart_toStartOf="@+id/tv_profile_services_description"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_services_category_label" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_description"
+                        android:layout_width="290dp"
+                        android:layout_height="137dp"
+                        android:gravity="start|bottom"
+                        android:justificationMode="inter_word"
+                        android:textSize="16dp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_profile_services_category_label"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_services_description_label"
+                        tools:text="Aqui aparecerá a descrição do serviço" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_value_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Valor:"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintStart_toStartOf="@+id/tv_profile_services_description"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_services_description" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_profile_services_value_label"
+                        app:layout_constraintStart_toEndOf="@+id/tv_profile_services_value_label"
+                        app:layout_constraintTop_toTopOf="@+id/tv_profile_services_value_label"
+                        tools:text="R$100,00" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_time_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="Tempo:"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_profile_services_value_label"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_profile_services_time"
+                        app:layout_constraintTop_toTopOf="@+id/tv_profile_services_value_label"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_profile_services_time_label"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_profile_services_description"
+                        app:layout_constraintTop_toTopOf="@+id/tv_profile_services_time_label"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:text="Hora" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_services_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/card_margin"
+                android:outlineAmbientShadowColor="@color/card_forecast_backgound_icon"
+                android:outlineSpotShadowColor="@color/card_forecast_backgound_icon"
+                app:cardCornerRadius="@dimen/card_corner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5">
+
+                <ImageView
+                    android:id="@+id/image_profile_services_settings_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/servsimples_banner" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_settings_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Configurações dos Serviços"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        android:textSize="@dimen/card_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.500"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.080" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_settings_create_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Adicionar serviço"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_services_settings_label" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_settings_edit_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Editar serviço"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_profile_services_settings_create_service"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_services_settings_create_service" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_services_settings_delete_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Excluir serviço"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="25dp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_profile_services_settings_edit_service"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_services_settings_edit_service" />
+
+                    <TextView
+                        android:id="@+id/dummy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_profile_services_settings_delete_service"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_profile_services_settings_delete_service" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_user_setting"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="@dimen/card_margin"
@@ -135,7 +377,7 @@
                         android:id="@+id/tv_profile_miscellaneous_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Opções"
+                        android:text="Configurações de usuário"
                         android:textColor="@color/servsimples_logo_color_green"
                         android:textSize="@dimen/card_title"
                         app:layout_constraintBottom_toBottomOf="parent"

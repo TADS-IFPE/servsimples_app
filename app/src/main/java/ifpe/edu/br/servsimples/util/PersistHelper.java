@@ -16,7 +16,6 @@ public class PersistHelper {
     private static final String SERVSIMPLES_PREFERENCES = "serversimples-prefernces";
     private static final String CPF = "user-cpf";
     private static final String TOKEN = "user-token";
-    private static final String STATUS = "user-session-status";
     private static final String NAME = "user-name";
     private static final String USER_TYPE = "user-type";
     private static final String SESSION_FLAG = "session-flag";
@@ -32,10 +31,10 @@ public class PersistHelper {
             return;
         }
         if (ServSimplesAppLogger.ISLOGABLE) {
-            ServSimplesAppLogger.d(TAG, "saveUserInfo:");
-            ServSimplesAppLogger.d(TAG, "user info: cpf:" + user.getCpf() + " name:"
-                    + user.getName() + " token:" + user.getToken() + " username:"
-                    + user.getUserName() + " userType:" + user.getUserType());
+            ServSimplesAppLogger.d(TAG, "saveUserInfo");
+//            ServSimplesAppLogger.d(TAG, "user info: cpf:" + user.getCpf() + " name:"
+//                    + user.getName() + " token:" + user.getToken() + " username:"
+//                    + user.getUserName() + " userType:" + user.getUserType());
         }
         SharedPreferences sp =
                 context.getSharedPreferences(SERVSIMPLES_PREFERENCES, Context.MODE_PRIVATE);
@@ -69,7 +68,7 @@ public class PersistHelper {
 
     public static User getUser(Context context) {
         if (ServSimplesAppLogger.ISLOGABLE)
-            ServSimplesAppLogger.d(TAG, "getUserInfo:");
+            ServSimplesAppLogger.d(TAG, "getUserInfo");
         SharedPreferences sp =
                 context.getSharedPreferences(SERVSIMPLES_PREFERENCES, Context.MODE_PRIVATE);
         String cpf = sp.getString(CPF, "");
@@ -77,8 +76,8 @@ public class PersistHelper {
         String name = sp.getString(NAME, "");
         int userType = sp.getInt(USER_TYPE, -1);
 
-        if (ServSimplesAppLogger.ISLOGABLE)
-            ServSimplesAppLogger.d(TAG, "info: cpf:" + cpf + " token:" + token +" name:" + name + " userType:" + userType);
+//        if (ServSimplesAppLogger.ISLOGABLE)
+//            ServSimplesAppLogger.d(TAG, "info: cpf:" + cpf + " token:" + token +" name:" + name + " userType:" + userType);
 
         User user = new User();
         user.setToken(token);
