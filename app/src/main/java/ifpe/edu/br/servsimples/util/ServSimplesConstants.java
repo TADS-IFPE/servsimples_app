@@ -14,7 +14,12 @@ public interface ServSimplesConstants {
 
     String ACTION_EDIT_PROFILE = "servsimples.com.action_edit_profile";
     String ACTION_EDIT_SERVICE = "servsimples.com.action_edit_service";
-
+    String CURRENT_SERVICE_NAME = "current-service-name";
+    String CURRENT_SERVICE_DESCRIPTION = "current-service-description";
+    String CURRENT_SERVICE_CATEGORY = "current-service-category";
+    String CURRENT_SERVICE_COST_VALUE = "current-service-coast-value";
+    String CURRENT_SERVICE_COST_TIME = "current-service-coast-time";
+    String CURRENT_SERVICE_ID = "current-service-id";
 
     int USER_EXISTS = 422;
     int USER_NOT_EXISTS = 416;

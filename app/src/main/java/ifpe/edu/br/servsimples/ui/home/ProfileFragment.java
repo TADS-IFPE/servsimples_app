@@ -62,6 +62,8 @@ public class ProfileFragment extends Fragment {
     private Spinner mSpServices;
     private CardView mServicesCard;
 
+    private Service mCurrentService;
+
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message message) {
             final int what = message.what;
@@ -71,10 +73,9 @@ public class ProfileFragment extends Fragment {
                     // TODO colocar aqui o texto da bio do usuario
                     List<Service> services = mcurrentUser.getServices();
                     if (services.isEmpty()) {
-                        Toast.makeText(getContext(), "O usuário ainda não oferece serviços",
-                                Toast.LENGTH_SHORT).show();
-                        mServicesCard.setVisibility(View.GONE);
+                        enableDisableServicesFields(View.GONE);
                     } else {
+                        enableDisableServicesFields(View.VISIBLE);
                         MyServicesDropDownAdapter servicesAdapter =
                                 new MyServicesDropDownAdapter(getContext(), services);
                         mSpServices.setAdapter(servicesAdapter);
@@ -83,12 +84,12 @@ public class ProfileFragment extends Fragment {
                                     @Override
                                     public void onItemSelected(AdapterView<?> parent, View view,
                                                                int position, long id) {
-                                        Service service = services.get(position);
-                                        mTvServiceName.setText(service.getName());
-                                        mTvServiceDescription.setText(service.getDescription());
-                                        mTvServiceCategory.setText(service.getCategory());
-                                        mTvServiceValue.setText(service.getCost().getValue());
-                                        mTvServiceTime.setText(service.getCost().getTime());
+                                        mCurrentService = services.get(position);
+                                        mTvServiceName.setText(mCurrentService.getName());
+                                        mTvServiceDescription.setText(mCurrentService.getDescription());
+                                        mTvServiceCategory.setText(mCurrentService.getCategory());
+                                        mTvServiceValue.setText(mCurrentService.getCost().getValue());
+                                        mTvServiceTime.setText(mCurrentService.getCost().getTime());
                                     }
 
                                     @Override
@@ -106,6 +107,12 @@ public class ProfileFragment extends Fragment {
             }
         }
     };
+
+    private void enableDisableServicesFields(int visible) {
+        mServicesCard.setVisibility(visible);
+        mTvEditService.setVisibility(visible);
+        mTvDeleteService.setVisibility(visible);
+    }
 
     public ProfileFragment() {
     }
@@ -131,6 +138,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "onResume");
         retrieveUserProfileInfo();
     }
 
@@ -175,6 +184,20 @@ public class ProfileFragment extends Fragment {
     private void editService() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "editService");
+        Intent intent = new Intent(getActivity(), ServicesHolderActivity.class);
+        intent.setAction(ServSimplesConstants.ACTION_EDIT_SERVICE);
+        startActivity(getFilledIntentWithCurrentServiceInfo(intent));
+    }
+
+    private Intent getFilledIntentWithCurrentServiceInfo(Intent intent) {
+        ServSimplesAppLogger.d(TAG, "salva service id: " + mCurrentService.getId()); // TODO remover
+        intent.putExtra(ServSimplesConstants.CURRENT_SERVICE_ID, mCurrentService.getId());
+        intent.putExtra(ServSimplesConstants.CURRENT_SERVICE_NAME, mCurrentService.getName());
+        intent.putExtra(ServSimplesConstants.CURRENT_SERVICE_DESCRIPTION, mCurrentService.getDescription());
+        intent.putExtra(ServSimplesConstants.CURRENT_SERVICE_CATEGORY, mCurrentService.getCategory());
+        intent.putExtra(ServSimplesConstants.CURRENT_SERVICE_COST_VALUE, mCurrentService.getCost().getValue());
+        intent.putExtra(ServSimplesConstants.CURRENT_SERVICE_COST_TIME, mCurrentService.getCost().getTime());
+        return intent;
     }
 
     private void createService() {

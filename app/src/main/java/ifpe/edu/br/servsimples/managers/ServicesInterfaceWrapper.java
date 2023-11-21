@@ -25,15 +25,15 @@ public abstract class ServicesInterfaceWrapper {
         @POST("api/get/user")
         Call<User> getUser(@Body RequestBody requestBody);
 
-        @POST("/api/update/user")
+        @POST("api/update/user")
         Call<User> updateUser(@Body RequestBody requestBody);
 
-        @POST("/api/unregister/user")
+        @POST("api/unregister/user")
         Call<User> removeUser(@Body RequestBody requestBody);
     }
 
     interface ServiceServices {
-        @POST("/api/register/service")
+        @POST("api/register/service")
         Call<User> registerService(@Body RequestBody requestBody);
 
         @POST("api/get/service")
@@ -42,10 +42,10 @@ public abstract class ServicesInterfaceWrapper {
         @POST("api/get/service/categories")
         Call<List<String>> getServiceCategories(@Body RequestBody requestBody);
 
-        @POST("/api/update/service")
+        @POST("api/update/service")
         Call<User> updateService(@Body RequestBody requestBody);
 
-        @POST("/api/unregister/service")
+        @POST("api/unregister/service")
         Call<User> removeService(@Body RequestBody requestBody);
     }
 

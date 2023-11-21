@@ -31,7 +31,6 @@ import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.util.PersistHelper;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
-import ifpe.edu.br.servsimples.util.ServSimplesConstants;
 import ifpe.edu.br.servsimples.util.ServerResponseCodeParser;
 
 
@@ -47,7 +46,7 @@ public class AddServiceFragment extends Fragment {
     private EditText mEtCostValue;
     private EditText mEtCostTime;
     private Button mBtSubmit;
-    private static String sAction;
+    private static Service mCurrentService;
     private List<String> mCategories = new ArrayList<>(Collections.singletonList("Default"));
     private CategoriesAdapter mCategoriesAdapter;
 
@@ -58,66 +57,112 @@ public class AddServiceFragment extends Fragment {
                 case GET_CATEGORIES_OK:
                     mCategoriesAdapter = new CategoriesAdapter(getContext(), mCategories);
                     mSpCategory.setAdapter(mCategoriesAdapter);
+                    if (mCurrentService != null) {
+                        int categoryIndex = mCategories.indexOf(mCurrentService.getCategory());
+                        mSpCategory.setSelection(categoryIndex);
+                        mEtNome.setText(mCurrentService.getName());
+                        mEtDescription.setText(mCurrentService.getDescription());
+                        mEtCostValue.setText(mCurrentService.getCost().getValue());
+                        mEtCostTime.setText(mCurrentService.getCost().getTime());
+                        mBtSubmit.setText("Editar");
+                    }
                     break;
                 case GET_CATEGORIES_FAIL:
                     requireActivity().finish();
                     break;
             }
-
         }
     };
-
 
     public AddServiceFragment() {
     }
 
     public static AddServiceFragment newInstance() {
-        sAction = null;
+        mCurrentService = null;
         return new AddServiceFragment();
     }
 
-    public static AddServiceFragment newInstance(String action) {
-        sAction = action;
+    public static AddServiceFragment newInstance(Service service) {
+        mCurrentService = service;
+        ServSimplesAppLogger.e(TAG, "verificando dnv o id: " + mCurrentService.getId()); // TODO remover
         return new AddServiceFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new Thread(() -> {
+        new Thread(() -> ServerManager.getInstance()
+                .getServiceCategories(PersistHelper.getUser(getContext()),
+                        new IServerManagerInterfaceWrapper.ServerCategoriesCallback() {
+                            @Override
+                            public void onSuccess(List<String> categories) {
+                                mCategories = categories;
+                                mHandler.sendEmptyMessage(GET_CATEGORIES_OK);
+                            }
+
+                            @Override
+                            public void onFailure(String message) {
+                                Toast.makeText(getContext(),
+                                        ServerResponseCodeParser.parseToString(message),
+                                        Toast.LENGTH_SHORT).show();
+                                mHandler.sendEmptyMessage(GET_CATEGORIES_FAIL);
+                            }
+                        })).start();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_add_service, container, false);
+        findViewsById(view);
+        if (mCurrentService != null) {
+            requireActivity().setTitle("Editar Serviço");
+            setUpEditServiceListeners();
+        } else {
+            requireActivity().setTitle("Criar Serviço");
+            setUpRegisterServiceListeners();
+        }
+        return view;
+    }
+
+    private void setUpEditServiceListeners() {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "setUpEditServiceListeners");
+        mBtSubmit.setOnClickListener(View -> {
+            if (isAnyFieldEmpty()) {
+                Toast.makeText(getContext(), "Todos os campos precisam ser preenchidos",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (ServSimplesAppLogger.ISLOGABLE)
+                ServSimplesAppLogger.d(TAG, "starting edit service process");
+            User user = PersistHelper.getUser(getContext());
+            Service service = getServiceFromView();
+            user.addService(service);
             ServerManager.getInstance()
-                    .getServiceCategories(PersistHelper.getUser(getContext()),
-                            new IServerManagerInterfaceWrapper.ServerCategoriesCallback() {
+                    .updateService(user,
+                            new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                                 @Override
-                                public void onSuccess(List<String> categories) {
-                                    mCategories = categories;
-                                    mHandler.sendEmptyMessage(GET_CATEGORIES_OK);
+                                public void onSuccess(User user) {
+                                    if (user == null) {
+                                        ServSimplesAppLogger.e(TAG, "'user' is null");
+                                        return;
+                                    }
+                                    if (ServSimplesAppLogger.ISLOGABLE)
+                                        Toast.makeText(getContext(), "Serviço atualizado com sucesso",
+                                                Toast.LENGTH_SHORT).show();
+                                    PersistHelper.saveUserInfo(user, getContext());
+                                    requireActivity().finish();
                                 }
 
                                 @Override
                                 public void onFailure(String message) {
                                     Toast.makeText(getContext(),
                                             ServerResponseCodeParser.parseToString(message),
-                                            Toast.LENGTH_SHORT).show();
-                                    mHandler.sendEmptyMessage(GET_CATEGORIES_FAIL);
+                                            Toast.LENGTH_LONG).show();
                                 }
                             });
-        }).start();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_add_service, container, false);
-        findViewsById(view);
-        if (sAction != null && sAction.equals(ServSimplesConstants.ACTION_EDIT_SERVICE)) {
-            setUpEditServiceListeners();
-        } else {
-            requireActivity().setTitle("Criar serviço");
-            setUpRegisterServiceListeners();
-        }
-        return view;
+        });
     }
 
     private void setUpRegisterServiceListeners() {
@@ -173,6 +218,7 @@ public class AddServiceFragment extends Fragment {
         cost.setValue(costValue.isEmpty() ? "não informado" : costValue);
 
         Service service = new Service();
+        service.setId(mCurrentService != null ? mCurrentService.getId() : null);
         service.setName(name.isEmpty() ? "não informado" : name);
         service.setCategory(category.isEmpty() ? "não informado" : category);
         service.setDescription(description.isEmpty() ? "não informado" : description);
@@ -189,27 +235,17 @@ public class AddServiceFragment extends Fragment {
         mBtSubmit = view.findViewById(R.id.bt_service_banner_submit);
     }
 
-    private void setUpEditServiceListeners() {
-        mBtSubmit.setOnClickListener(View -> {
-            //submitService
-        });
-
-    }
-
     private boolean isAnyFieldEmpty() {
         List<String> fields = new ArrayList<>();
         fields.add(mEtNome.getText().toString());
-        //fields.add(mSpCategory.getSelectedItem().toString());
         fields.add(mEtDescription.getText().toString());
         fields.add(mEtCostValue.getText().toString());
         fields.add(mEtCostTime.getText().toString());
-
         for (String field : fields) {
             if (!isValid(field)) {
                 return true;
             }
         }
-
         return false;
     }
 
