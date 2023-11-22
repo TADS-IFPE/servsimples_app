@@ -37,6 +37,7 @@ public class IServerManagerInterfaceWrapper {
                                   ServerCategoriesCallback categoriesCallback);
 
         void updateService(User user, ServerRequestCallback serviceCallback);
+        void unregisterService(User user, ServerRequestCallback serviceCallback);
     }
 
     public interface ServerCategoriesCallback {

@@ -256,6 +256,38 @@ public class ServerManager implements IServerManagerInterfaceWrapper.IServerUser
     }
 
     @Override
+    public void unregisterService(User user,
+                                  IServerManagerInterfaceWrapper.ServerRequestCallback callback) {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "unregisterService");
+        mConnectionManager
+                .getServSimplesConnection().create(ServicesInterfaceWrapper.ServiceServices.class)
+                .unregisterService(RequestBody.create(MediaType.parse("application/json"),
+                        new Gson().toJson(user)))
+                .enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> resp) {
+                        if (resp.isSuccessful() && resp.code() == ServSimplesConstants.HTTP_OK) {
+                            callback.onSuccess(resp.body());
+                        } else {
+                            if (ServSimplesAppLogger.ISLOGABLE)
+                                ServSimplesAppLogger.w(TAG, "unregisterService not ok: status:"
+                                        + resp.code());
+                            callback.onFailure(String.valueOf(resp.code()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                        if (ServSimplesAppLogger.ISLOGABLE)
+                            ServSimplesAppLogger.e(TAG, "unregisterService: onFailure:"
+                                    + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
     public void getServiceCategories(User user,
                                      IServerManagerInterfaceWrapper.ServerCategoriesCallback callback) {
         if (ServSimplesAppLogger.ISLOGABLE)

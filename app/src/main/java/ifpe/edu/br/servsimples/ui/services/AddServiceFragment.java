@@ -84,7 +84,6 @@ public class AddServiceFragment extends Fragment {
 
     public static AddServiceFragment newInstance(Service service) {
         mCurrentService = service;
-        ServSimplesAppLogger.e(TAG, "verificando dnv o id: " + mCurrentService.getId()); // TODO remover
         return new AddServiceFragment();
     }
 
@@ -92,7 +91,7 @@ public class AddServiceFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new Thread(() -> ServerManager.getInstance()
-                .getServiceCategories(PersistHelper.getUser(getContext()),
+                .getServiceCategories(PersistHelper.getCurrentUser(getContext()),
                         new IServerManagerInterfaceWrapper.ServerCategoriesCallback() {
                             @Override
                             public void onSuccess(List<String> categories) {
@@ -136,7 +135,7 @@ public class AddServiceFragment extends Fragment {
             }
             if (ServSimplesAppLogger.ISLOGABLE)
                 ServSimplesAppLogger.d(TAG, "starting edit service process");
-            User user = PersistHelper.getUser(getContext());
+            User user = PersistHelper.getCurrentUser(getContext());
             Service service = getServiceFromView();
             user.addService(service);
             ServerManager.getInstance()
@@ -176,7 +175,7 @@ public class AddServiceFragment extends Fragment {
             }
             if (ServSimplesAppLogger.ISLOGABLE)
                 ServSimplesAppLogger.d(TAG, "starting register service process");
-            User user = PersistHelper.getUser(getContext());
+            User user = PersistHelper.getCurrentUser(getContext());
             Service service = getServiceFromView();
             user.addService(service);
             ServerManager.getInstance()

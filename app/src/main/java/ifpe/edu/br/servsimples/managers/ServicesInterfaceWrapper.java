@@ -46,7 +46,7 @@ public abstract class ServicesInterfaceWrapper {
         Call<User> updateService(@Body RequestBody requestBody);
 
         @POST("api/unregister/service")
-        Call<User> removeService(@Body RequestBody requestBody);
+        Call<User> unregisterService(@Body RequestBody requestBody);
     }
 
     interface EventServices {

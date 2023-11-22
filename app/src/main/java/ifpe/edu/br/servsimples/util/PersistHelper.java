@@ -66,7 +66,7 @@ public class PersistHelper {
         editor.apply();
     }
 
-    public static User getUser(Context context) {
+    public static User getCurrentUser(Context context) {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "getUserInfo");
         SharedPreferences sp =

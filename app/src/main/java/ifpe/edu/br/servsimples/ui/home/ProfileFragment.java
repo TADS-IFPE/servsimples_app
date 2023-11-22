@@ -36,6 +36,7 @@ import ifpe.edu.br.servsimples.ui.services.ServicesHolderActivity;
 import ifpe.edu.br.servsimples.util.PersistHelper;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 import ifpe.edu.br.servsimples.util.ServSimplesConstants;
+import ifpe.edu.br.servsimples.util.ServerResponseCodeParser;
 
 
 public class ProfileFragment extends Fragment {
@@ -100,8 +101,6 @@ public class ProfileFragment extends Fragment {
                     }
                     break;
                 case GET_USER_NOT_OK:
-                    Toast.makeText(getContext(), "Não foi possível recuperar informações do usuário",
-                            Toast.LENGTH_SHORT).show();
                     logOut();
                     break;
             }
@@ -148,7 +147,7 @@ public class ProfileFragment extends Fragment {
             ServSimplesAppLogger.d(TAG, "retrieveUserProfileInfo");
 
         new Thread(() -> ServerManager.getInstance()
-                .getUser(PersistHelper.getUser(getContext()),
+                .getUser(PersistHelper.getCurrentUser(getContext()),
                         new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                             @Override
                             public void onSuccess(User user) {
@@ -162,6 +161,9 @@ public class ProfileFragment extends Fragment {
 
                             @Override
                             public void onFailure(String message) {
+                                Toast.makeText(getContext(),
+                                        ServerResponseCodeParser.parseToString(message),
+                                        Toast.LENGTH_SHORT).show();
                                 mHandler.sendEmptyMessage(GET_USER_NOT_OK);
                             }
                         })).start();
@@ -179,6 +181,29 @@ public class ProfileFragment extends Fragment {
     private void deleteService() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "deleteService");
+        User currentUser = PersistHelper.getCurrentUser(getContext());
+        currentUser.addService(mCurrentService);
+        ServerManager.getInstance()
+                .unregisterService(currentUser,
+                        new IServerManagerInterfaceWrapper.ServerRequestCallback() {
+                            @Override
+                            public void onSuccess(User user) {
+                                if (user == null) {
+                                    ServSimplesAppLogger.e(TAG, "'user' is null");
+                                    return;
+                                }
+                                if (ServSimplesAppLogger.ISLOGABLE)
+                                    Toast.makeText(getContext(), "Serviço removido com sucesso",
+                                            Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(String message) {
+                                Toast.makeText(getContext(),
+                                        ServerResponseCodeParser.parseToString(message),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
     }
 
     private void editService() {
@@ -190,7 +215,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private Intent getFilledIntentWithCurrentServiceInfo(Intent intent) {
-        ServSimplesAppLogger.d(TAG, "salva service id: " + mCurrentService.getId()); // TODO remover
         intent.putExtra(ServSimplesConstants.CURRENT_SERVICE_ID, mCurrentService.getId());
         intent.putExtra(ServSimplesConstants.CURRENT_SERVICE_NAME, mCurrentService.getName());
         intent.putExtra(ServSimplesConstants.CURRENT_SERVICE_DESCRIPTION, mCurrentService.getDescription());
@@ -210,7 +234,7 @@ public class ProfileFragment extends Fragment {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "deleteProfile");
         ServerManager.getInstance()
-                .unregisterUser(PersistHelper.getUser(getContext()),
+                .unregisterUser(PersistHelper.getCurrentUser(getContext()),
                         new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                             @Override
                             public void onSuccess(User user) {
@@ -222,7 +246,8 @@ public class ProfileFragment extends Fragment {
 
                             @Override
                             public void onFailure(String message) {
-                                Toast.makeText(getContext(), "Não foi possível deletar o usuário",
+                                Toast.makeText(getContext(),
+                                        ServerResponseCodeParser.parseToString(message),
                                         Toast.LENGTH_SHORT).show();
                             }
                         });

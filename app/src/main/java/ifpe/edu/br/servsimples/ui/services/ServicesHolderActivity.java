@@ -46,7 +46,6 @@ public class ServicesHolderActivity extends AppCompatActivity
         String costTime = intent.getStringExtra(ServSimplesConstants.CURRENT_SERVICE_COST_TIME);
         String costValue = intent.getStringExtra(ServSimplesConstants.CURRENT_SERVICE_COST_VALUE);
         Long id = intent.getLongExtra(ServSimplesConstants.CURRENT_SERVICE_ID, -1);
-        ServSimplesAppLogger.e(TAG, "pegando o id: " + id); // TODO remover
 
         Cost cost = new Cost();
         cost.setValue(costValue);
@@ -59,7 +58,6 @@ public class ServicesHolderActivity extends AppCompatActivity
         service.setDescription(description);
         service.setCost(cost);
 
-        ServSimplesAppLogger.e(TAG, "verificando o id: " + service.getId()); // TODO remover
         return service;
     }
 

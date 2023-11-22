@@ -126,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void performEditUser() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "performEditUser:");
-        User user = PersistHelper.getUser(getApplicationContext());
+        User user = PersistHelper.getCurrentUser(getApplicationContext());
         retrieveUserInfo(user);
     }
 
@@ -149,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(String message) {
                         Toast.makeText(RegisterActivity.this,
-                                "Não foi possível recuperar informações do usuário",
+                                ServerResponseCodeParser.parseToString(message),
                                 Toast.LENGTH_LONG).show();
                         finish();
                     }
@@ -157,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void editUser() {
-        User currentUser = PersistHelper.getUser(getApplicationContext());
+        User currentUser = PersistHelper.getCurrentUser(getApplicationContext());
         User editUser = new User();
         editUser.setToken(currentUser.getToken());
         editUser.setCpf(currentUser.getCpf());
@@ -185,7 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(String message) {
                             Toast.makeText(RegisterActivity.this,
-                                    "Não foi possível atualizar o usuário",
+                                    ServerResponseCodeParser.parseToString(message),
                                     Toast.LENGTH_LONG).show();
                         }
                     });
@@ -253,8 +253,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 if (isUpdateUserAction) {
-                    user.setToken(PersistHelper.getUser(getApplicationContext()).getToken());
-                    mServSimplesServerManager.updateUser(user,
+                    user.setToken(PersistHelper.getCurrentUser(getApplicationContext()).getToken());
+                    mServSimplesServerManager
+                            .updateUser(user,
                             new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                                 @Override
                                 public void onSuccess(User user) {
@@ -265,7 +266,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(String message) {
-
+                                    Toast.makeText(RegisterActivity.this,
+                                            ServerResponseCodeParser.parseToString(message),
+                                            Toast.LENGTH_LONG).show();
                                 }
                             });
                 } else {
@@ -288,7 +291,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(String message) {
                                     Toast.makeText(RegisterActivity.this,
-                                            "Não foi possível registrar o usuário",
+                                            ServerResponseCodeParser.parseToString(message),
                                             Toast.LENGTH_LONG).show();
                                 }
                             });
