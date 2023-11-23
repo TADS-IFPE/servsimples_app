@@ -9,9 +9,9 @@
         android:id="@+id/myservices_dropdownitem_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:textSize="@dimen/card_title"
-        tools:text="Nome do serviço"
-        android:textColor="@color/servsimples_logo_color_green"/>
+        android:layout_margin="20dp"
+        android:textColor="@color/servsimples_logo_color_green"
+        android:textSize="20sp"
+        tools:text="Nome do serviço" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

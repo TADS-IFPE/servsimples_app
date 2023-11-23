@@ -18,9 +18,18 @@ public class User {
     private String name;
     private String cpf;
     private String userName;
+    private String bio;
     private String password;
     private UserType userType = UserType.USER;
     private String token;
+
+    public String getBio() {
+        return this.bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public enum UserType {
         USER, PROFESSIONAL, ADMIN

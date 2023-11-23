@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.ServicesFragment"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:context=".ui.home.ServicesFragment">
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -26,19 +26,19 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/servsimples_banner"/>
+                    android:background="@color/servsimples_banner" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <Button
-                        android:id="@+id/bt_service_add"
+                    <TextView
+                        android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="100dp"
-                        android:layout_marginBottom="57dp"
-                        android:text=""
+                        android:text="Em breve algo novo aqui"
+                        android:textSize="@dimen/simple_form_fontsize"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

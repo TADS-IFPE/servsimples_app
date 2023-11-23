@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,117 +7,173 @@
     android:orientation="vertical"
     tools:context=".ui.RegisterActivity">
 
-    <TextView
-        android:id="@+id/register_tv_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Preencha os campos abaixo"
-        android:textColor="@color/servsimples_logo_color_green"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/register_et_name"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:hint="Nome"
-        android:inputType="textPersonName"
-        android:textColor="@color/servsimples_logo_color_green"
-        app:layout_constraintEnd_toEndOf="@+id/register_tv_info"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/register_tv_info"
-        app:layout_constraintTop_toBottomOf="@+id/register_tv_info" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/register_et_cpf"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="CPF"
-        android:inputType="number"
-        android:textColor="@color/servsimples_logo_color_green"
-        app:layout_constraintEnd_toEndOf="@+id/register_et_name"
-        app:layout_constraintStart_toStartOf="@+id/register_et_name"
-        app:layout_constraintTop_toBottomOf="@+id/register_et_name" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="920dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="@dimen/card_corner">
 
-    <EditText
-        android:id="@+id/register_et_username"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Nome de usuário"
-        android:inputType="text"
-        android:textColor="@color/servsimples_logo_color_green"
-        app:layout_constraintEnd_toEndOf="@+id/register_et_cpf"
-        app:layout_constraintStart_toStartOf="@+id/register_et_cpf"
-        app:layout_constraintTop_toBottomOf="@+id/register_et_cpf" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/servsimples_banner" />
 
-    <EditText
-        android:id="@+id/register_et_password_confirmation"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        android:textColor="@color/servsimples_logo_color_green"
-        app:layout_constraintEnd_toEndOf="@+id/register_et_username"
-        app:layout_constraintStart_toStartOf="@+id/register_et_username"
-        app:layout_constraintTop_toBottomOf="@+id/register_et_username" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/register_et_password"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Confirmação de senha"
-        android:inputType="textPassword"
-        android:textColor="@color/servsimples_logo_color_green"
-        app:layout_constraintEnd_toEndOf="@+id/register_et_password_confirmation"
-        app:layout_constraintStart_toStartOf="@+id/register_et_password_confirmation"
-        app:layout_constraintTop_toBottomOf="@+id/register_et_password_confirmation" />
+                    <TextView
+                        android:id="@+id/register_tv_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Preencha os campos abaixo"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        android:textSize="25sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.1" />
 
-    <TextView
-        android:id="@+id/register_tv_usertype"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Sou prestador de serviços"
-        android:textColor="@color/servsimples_logo_color_green"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/register_et_password"
-        app:layout_constraintTop_toBottomOf="@+id/register_et_password" />
+                    <EditText
+                        android:id="@+id/register_et_name"
+                        android:layout_width="@dimen/simple_form_width"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:ems="10"
+                        android:hint="Nome"
+                        android:textSize="@dimen/simple_form_fontsize"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        app:layout_constraintEnd_toEndOf="@+id/register_tv_info"
+                        app:layout_constraintHorizontal_bias="0.493"
+                        app:layout_constraintStart_toStartOf="@+id/register_tv_info"
+                        app:layout_constraintTop_toBottomOf="@+id/register_tv_info" />
 
-    <CheckBox
-        android:id="@+id/register_cb_usertype"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/servsimples_logo_color_green"
-        app:layout_constraintBottom_toBottomOf="@+id/register_tv_usertype"
-        app:layout_constraintEnd_toEndOf="@+id/register_et_password"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/register_tv_usertype"
-        app:layout_constraintTop_toTopOf="@+id/register_tv_usertype"
-        app:layout_constraintVertical_bias="0.517" />
+                    <EditText
+                        android:id="@+id/register_et_bio"
+                        android:layout_width="@dimen/simple_form_width"
+                        android:layout_height="166dp"
+                        android:ems="10"
+                        android:hint="Bio"
+                        android:textSize="@dimen/simple_form_fontsize"
+                        android:gravity="start|bottom"
+                        android:inputType="textMultiLine"
+                        android:justificationMode="inter_word"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        app:layout_constraintEnd_toEndOf="@+id/register_et_name"
+                        app:layout_constraintStart_toStartOf="@+id/register_et_name"
+                        app:layout_constraintTop_toBottomOf="@+id/register_et_name" />
 
-    <Button
-        android:id="@+id/register_bt_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registrar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_tv_usertype" />
+                    <EditText
+                        android:id="@+id/register_et_cpf"
+                        android:layout_width="@dimen/simple_form_width"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:ems="10"
+                        android:textSize="@dimen/simple_form_fontsize"
+                        android:hint="CPF"
+                        android:inputType="number"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        app:layout_constraintEnd_toEndOf="@+id/register_et_bio"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/register_et_bio"
+                        app:layout_constraintTop_toBottomOf="@+id/register_et_bio" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <EditText
+                        android:id="@+id/register_et_username"
+                        android:layout_width="@dimen/simple_form_width"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:textSize="@dimen/simple_form_fontsize"
+                        android:ems="10"
+                        android:hint="Nome de usuário"
+                        android:inputType="text"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        app:layout_constraintEnd_toEndOf="@+id/register_et_cpf"
+                        app:layout_constraintStart_toStartOf="@+id/register_et_cpf"
+                        app:layout_constraintTop_toBottomOf="@+id/register_et_cpf" />
+
+                    <EditText
+                        android:id="@+id/register_et_password_confirmation"
+                        android:layout_width="@dimen/simple_form_width"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:ems="10"
+                        android:textSize="@dimen/simple_form_fontsize"
+                        android:hint="Senha"
+                        android:inputType="textPassword"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        app:layout_constraintEnd_toEndOf="@+id/register_et_username"
+                        app:layout_constraintStart_toStartOf="@+id/register_et_username"
+                        app:layout_constraintTop_toBottomOf="@+id/register_et_username" />
+
+                    <EditText
+                        android:id="@+id/register_et_password"
+                        android:layout_width="@dimen/simple_form_width"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:ems="10"
+                        android:textSize="@dimen/simple_form_fontsize"
+                        android:hint="Confirmação de senha"
+                        android:inputType="textPassword"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        app:layout_constraintEnd_toEndOf="@+id/register_et_password_confirmation"
+                        app:layout_constraintStart_toStartOf="@+id/register_et_password_confirmation"
+                        app:layout_constraintTop_toBottomOf="@+id/register_et_password_confirmation" />
+
+                    <TextView
+                        android:id="@+id/register_tv_usertype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textSize="20sp"
+                        android:text="Sou prestador de serviços"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/register_et_password"
+                        app:layout_constraintTop_toBottomOf="@+id/register_et_password" />
+
+                    <CheckBox
+                        android:id="@+id/register_cb_usertype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        app:layout_constraintBottom_toBottomOf="@+id/register_tv_usertype"
+                        app:layout_constraintEnd_toEndOf="@+id/register_et_password"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/register_tv_usertype"
+                        app:layout_constraintTop_toTopOf="@+id/register_tv_usertype"
+                        app:layout_constraintVertical_bias="0.517" />
+
+                    <Button
+                        android:id="@+id/register_bt_submit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Registrar"
+                        android:textSize="@dimen/simple_form_fontsize"
+                        android:layout_marginTop="40dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/register_tv_usertype" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

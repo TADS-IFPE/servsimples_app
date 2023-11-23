@@ -33,8 +33,8 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/login_icon_card"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="226dp"
+                android:layout_height="125dp"
                 android:layout_marginTop="55dp"
                 android:layout_marginBottom="56dp"
                 app:cardCornerRadius="20sp"
@@ -44,19 +44,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/login_tv_label">
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/app_launcher_icon" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/app_login_icon" />
+
             </androidx.cardview.widget.CardView>
 
             <EditText
                 android:id="@+id/login_et_username"
-                android:layout_width="250dp"
+                android:layout_width="@dimen/simple_form_width"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Nome de usuário"
                 android:inputType="text"
                 android:textColor="@color/servsimples_logo_color_green"
+                android:textSize="@dimen/simple_form_fontsize"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -65,13 +67,14 @@
 
             <EditText
                 android:id="@+id/login_et_password"
-                android:layout_width="250dp"
+                android:layout_width="@dimen/simple_form_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:ems="10"
                 android:hint="Senha"
                 android:inputType="textPassword"
                 android:textColor="@color/servsimples_logo_color_green"
+                android:textSize="@dimen/simple_form_fontsize"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,6 +87,7 @@
                 android:layout_marginTop="52dp"
                 android:hint="Login"
                 android:textColor="@color/servsimples_logo_color_green"
+                android:textSize="@dimen/simple_form_fontsize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/login_et_password" />
@@ -93,13 +97,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="28dp"
+                android:layout_marginBottom="20dp"
                 android:text="Registrar"
                 android:textColor="@color/servsimples_logo_color_green"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="20dp"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

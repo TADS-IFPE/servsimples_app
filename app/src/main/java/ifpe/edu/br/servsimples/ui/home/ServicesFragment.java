@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
@@ -18,7 +17,6 @@ import ifpe.edu.br.servsimples.R;
 
 public class ServicesFragment extends Fragment {
 
-    private Button mServiceAdd;
 
     public ServicesFragment() {
     }
@@ -42,16 +40,10 @@ public class ServicesFragment extends Fragment {
     }
 
     private void setUpListeners() {
-        mServiceAdd.setOnClickListener(view -> {
-            performAddService();
-        });
-    }
 
-    private void performAddService() {
-        //startActivity(new Intent(getActivity(), ServicesHolderActivity.class));
     }
 
     private void findViewsById(View view) {
-        mServiceAdd = view.findViewById(R.id.bt_service_add);
+
     }
 }

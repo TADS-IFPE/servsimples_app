@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -32,11 +31,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_constraintBottom_toTopOf="@+id/sp_service_banner_category"
-                    app:layout_constraintTop_toTopOf="@+id/sp_service_banner_category"
-                    tools:layout_editor_absoluteX="100dp"
-                    tools:layout_editor_absoluteY="13dp">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/tv_service_banner_title"
@@ -54,13 +49,13 @@
 
                     <EditText
                         android:id="@+id/et_service_banner_name"
-                        android:layout_width="330dp"
+                        android:layout_width="@dimen/simple_form_width"
                         android:layout_height="60dp"
                         android:layout_marginTop="40dp"
                         android:ems="10"
+                        android:textSize="@dimen/simple_form_fontsize"
                         android:hint="Nome do serviço"
                         android:inputType="text"
-                        android:textSize="@dimen/card_info"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="@+id/tv_service_banner_title"
                         app:layout_constraintHorizontal_bias="0.49"
@@ -69,38 +64,38 @@
 
                     <TextView
                         android:id="@+id/tv_service_banner_category_label"
-                        android:layout_width="130dp"
+                        android:layout_width="@dimen/simple_form_width"
                         android:layout_height="41dp"
                         android:layout_marginTop="15dp"
                         android:gravity="center|start"
                         android:text="Categoria"
-                        android:textSize="@dimen/card_info"
+                        android:textSize="@dimen/simple_form_fontsize"
                         android:textStyle="italic"
                         app:layout_constraintStart_toStartOf="@+id/et_service_banner_name"
                         app:layout_constraintTop_toBottomOf="@+id/et_service_banner_name" />
 
                     <Spinner
                         android:id="@+id/sp_service_banner_category"
-                        android:layout_width="330dp"
-                        android:layout_height="34dp"
+                        android:layout_width="@dimen/simple_form_width"
+                        android:layout_height="@dimen/simple_form_spinner_height"
                         android:ems="10"
                         android:inputType="text"
                         android:text="Name"
-                        android:textSize="@dimen/card_info"
+                        android:textSize="@dimen/simple_form_fontsize"
                         app:layout_constraintStart_toStartOf="@+id/tv_service_banner_category_label"
                         app:layout_constraintTop_toBottomOf="@+id/tv_service_banner_category_label" />
 
                     <EditText
                         android:id="@+id/et_service_banner_description"
-                        android:layout_width="330dp"
+                        android:layout_width="@dimen/simple_form_width"
                         android:layout_height="209dp"
                         android:layout_marginTop="15dp"
                         android:ems="10"
+                        android:textSize="@dimen/simple_form_fontsize"
                         android:gravity="start|bottom"
                         android:hint="Descrição do serviço"
                         android:inputType="textMultiLine"
                         android:justificationMode="inter_word"
-                        android:textSize="@dimen/card_info"
                         app:layout_constraintEnd_toEndOf="@+id/sp_service_banner_category"
                         app:layout_constraintStart_toStartOf="@+id/sp_service_banner_category"
                         app:layout_constraintTop_toBottomOf="@+id/sp_service_banner_category" />
@@ -111,9 +106,9 @@
                         android:layout_height="60dp"
                         android:layout_marginTop="15dp"
                         android:ems="10"
+                        android:textSize="@dimen/simple_form_fontsize"
                         android:hint="Valor"
                         android:inputType="text"
-                        android:textSize="@dimen/card_info"
                         app:layout_constraintStart_toStartOf="@+id/et_service_banner_description"
                         app:layout_constraintTop_toBottomOf="@+id/et_service_banner_description" />
 
@@ -124,7 +119,7 @@
                         android:ems="10"
                         android:hint="Tempo"
                         android:inputType="text"
-                        android:textSize="@dimen/card_info"
+                        android:textSize="@dimen/simple_form_fontsize"
                         app:layout_constraintEnd_toEndOf="@+id/et_service_banner_description"
                         app:layout_constraintTop_toTopOf="@+id/et_service_banner_value" />
 
@@ -133,6 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Criar"
+                        android:textSize="@dimen/simple_form_fontsize"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.458"

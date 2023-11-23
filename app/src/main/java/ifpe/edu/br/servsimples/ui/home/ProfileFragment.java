@@ -49,6 +49,7 @@ public class ProfileFragment extends Fragment {
     private TextView mEditProfile;
     private TextView mDeleteUser;
     private TextView mTvUserName;
+    private TextView mTvUserBio;
     private User mcurrentUser;
 
     //Services
@@ -71,7 +72,7 @@ public class ProfileFragment extends Fragment {
             switch (what) {
                 case GET_USER_OK:
                     mTvUserName.setText(mcurrentUser.getName());
-                    // TODO colocar aqui o texto da bio do usuario
+                    mTvUserBio.setText(mcurrentUser.getBio());
                     List<Service> services = mcurrentUser.getServices();
                     if (services.isEmpty()) {
                         enableDisableServicesFields(View.GONE);
@@ -275,6 +276,7 @@ public class ProfileFragment extends Fragment {
         mEditProfile = view.findViewById(R.id.tv_profile_miscellaneous_edit_profile);
         mDeleteUser = view.findViewById(R.id.tv_profile_miscellaneous_delete_profile);
         mTvUserName = view.findViewById(R.id.tv_profile_name);
+        mTvUserBio = view.findViewById(R.id.tv_profile_bio);
 
         //Services
         mTvServiceName = view.findViewById(R.id.tv_profile_services_name);

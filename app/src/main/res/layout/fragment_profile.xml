@@ -79,7 +79,7 @@
                         android:layout_width="215dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="15dp"
-                        android:textSize="22sp"
+                        android:textSize="@dimen/simple_form_fontsize"
                         app:layout_constraintBottom_toBottomOf="@+id/cardView_profile_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -94,14 +94,14 @@
                         android:layout_height="117dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="20dp"
-                        android:autoSizeTextType="uniform"
-                        android:text="Sou Engenheiro de Software e estudante do curso de ADS do IFPE campus Recife. Atuo no mercado de trabalho há três anos como desenvolvedor Android embarcado"
+                        android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_profile_name"
                         app:layout_constraintTop_toBottomOf="@+id/tv_profile_name"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:text="Sou Engenheiro de Software e estudante do curso de ADS do IFPE campus Recife. Atuo no mercado de trabalho há três anos como desenvolvedor Android embarcado" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -110,7 +110,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_services_info"
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="470dp"
                 android:layout_margin="@dimen/card_margin"
                 android:outlineAmbientShadowColor="@color/card_forecast_backgound_icon"
                 android:outlineSpotShadowColor="@color/card_forecast_backgound_icon"
@@ -135,7 +135,7 @@
                         android:id="@+id/tv_services_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Meus Serviços"
+                        android:text="Serviços"
                         android:textColor="@color/servsimples_logo_color_green"
                         android:textSize="@dimen/card_title"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -148,7 +148,7 @@
                     <Spinner
                         android:id="@+id/sp_services"
                         android:layout_width="310dp"
-                        android:layout_height="50dp"
+                        android:layout_height="@dimen/simple_form_spinner_height"
                         android:layout_marginTop="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -300,7 +300,7 @@
                         android:id="@+id/tv_profile_services_settings_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Configurações dos Serviços"
+                        android:text="Ajustes dos Serviços"
                         android:textColor="@color/servsimples_logo_color_green"
                         android:textSize="@dimen/card_title"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -336,9 +336,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:layout_marginBottom="25dp"
                         android:text="Excluir serviço"
                         android:textSize="18sp"
-                        android:layout_marginBottom="25dp"
                         app:layout_constraintStart_toStartOf="@+id/tv_profile_services_settings_edit_service"
                         app:layout_constraintTop_toBottomOf="@+id/tv_profile_services_settings_edit_service" />
 
@@ -382,7 +382,7 @@
                         android:id="@+id/tv_profile_miscellaneous_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Configurações de usuário"
+                        android:text="Ajustes de usuário"
                         android:textColor="@color/servsimples_logo_color_green"
                         android:textSize="@dimen/card_title"
                         app:layout_constraintBottom_toBottomOf="parent"

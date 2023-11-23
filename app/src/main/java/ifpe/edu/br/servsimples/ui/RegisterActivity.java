@@ -7,7 +7,6 @@ package ifpe.edu.br.servsimples.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -30,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private Button mBtSubmit;
     private EditText mEtName;
+    private EditText mEtBio;
     private EditText mEtUsername;
     private EditText mEtPassword;
     private EditText mEtPasswordConfirm;
@@ -57,9 +57,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void performRegisterUser() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "performRegisterUser:");
-        mBtSubmit.setText("Register");
+        mBtSubmit.setText("Registrar");
         mBtSubmit.setOnClickListener(view -> {
             String name = mEtName.getText().toString();
+            String bio = mEtBio.getText().toString();
             String username = mEtUsername.getText().toString();
             String password = mEtPassword.getText().toString();
             String passwordConfirm = mEtPasswordConfirm.getText().toString();
@@ -86,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             User user = new User();
             user.setName(name);
+            user.setBio(bio);
             user.setCpf(cpf);
             user.setUserName(username);
             user.setPassword(password);
@@ -138,9 +140,10 @@ public class RegisterActivity extends AppCompatActivity {
                         mEtCPF.setText(user.getCpf());
                         mEtCPF.setEnabled(false);
                         mEtName.setText(user.getName());
+                        mEtBio.setText(user.getBio());
                         mEtUsername.setText(user.getUserName());
                         mCbIsProfessionalUser.setChecked(user.getUserType() == User.UserType.PROFESSIONAL);
-                        mBtSubmit.setText("Update");
+                        mBtSubmit.setText("Atualizar");
                         mBtSubmit.setOnClickListener(view -> {
                             editUser();
                         });
@@ -163,10 +166,12 @@ public class RegisterActivity extends AppCompatActivity {
         editUser.setCpf(currentUser.getCpf());
         if (!isAnyEditableFieldEmpty()) {
             String name = mEtName.getText().toString();
+            String bio = mEtBio.getText().toString();
             String username = mEtUsername.getText().toString();
             String password = mEtPassword.getText().toString();
 
             editUser.setName(name);
+            editUser.setBio(bio);
             editUser.setUserName(username);
             editUser.setPassword(password);
             boolean isProfessionalUser = mCbIsProfessionalUser.isChecked();
@@ -199,111 +204,19 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean isAnyEditableFieldEmpty() {
         String name = mEtName.getText().toString();
+        String bio = mEtBio.getText().toString();
         String username = mEtUsername.getText().toString();
         String password = mEtPassword.getText().toString();
         String passwordConfirm = mEtPasswordConfirm.getText().toString();
         return name.isEmpty() || username.isEmpty() || password.isEmpty()
-                || passwordConfirm.isEmpty();
-    }
-
-    private void setListeners() {
-        mBtSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = mEtName.getText().toString();
-                String username = mEtUsername.getText().toString();
-                String password = mEtPassword.getText().toString();
-                String passwordConfirm = mEtPasswordConfirm.getText().toString();
-                String cpf = mEtCPF.getText().toString();
-
-                boolean isProfessionalUser = mCbIsProfessionalUser.isChecked();
-
-                if (name.isEmpty() || username.isEmpty() || password.isEmpty()
-                        || passwordConfirm.isEmpty() || cpf.isEmpty()) {
-
-                    if (isUpdateUserAction && !name.isEmpty() && !username.isEmpty() && !password.isEmpty()
-                            && !passwordConfirm.isEmpty()) {
-                    } else {
-                        Toast.makeText(RegisterActivity.this,
-                                "Todos os campos precisam ser preenchidos",
-                                Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
-
-                if (!password.equals(passwordConfirm)) {
-                    Toast.makeText(RegisterActivity.this,
-                            "Confirmação de senha incorreta",
-                            Toast.LENGTH_LONG).show();
-                }
-
-                if (username.equals(password)) {
-                    Toast.makeText(RegisterActivity.this,
-                            "A senha não pode ser igual ao nome de usuário",
-                            Toast.LENGTH_LONG).show();
-                }
-
-                User user = new User();
-                user.setName(name);
-                user.setCpf(cpf);
-                user.setUserName(username);
-                user.setPassword(password);
-                user.setUserType(isProfessionalUser ?
-                        User.UserType.PROFESSIONAL : User.UserType.USER);
-
-
-                if (isUpdateUserAction) {
-                    user.setToken(PersistHelper.getCurrentUser(getApplicationContext()).getToken());
-                    mServSimplesServerManager
-                            .updateUser(user,
-                            new IServerManagerInterfaceWrapper.ServerRequestCallback() {
-                                @Override
-                                public void onSuccess(User user) {
-                                    PersistHelper.saveUserInfo(user, getApplicationContext());
-                                    isUpdateUserAction = false;
-                                    finish();
-                                }
-
-                                @Override
-                                public void onFailure(String message) {
-                                    Toast.makeText(RegisterActivity.this,
-                                            ServerResponseCodeParser.parseToString(message),
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            });
-                } else {
-                    mServSimplesServerManager.registerUser(user,
-                            new IServerManagerInterfaceWrapper.ServerRequestCallback() {
-                                @Override
-                                public void onSuccess(User user) {
-                                    if (user == null) {
-                                        if (ServSimplesAppLogger.ISLOGABLE)
-                                            ServSimplesAppLogger.d(TAG, "Algo deu MUITO errado");
-                                        return;
-                                    }
-
-                                    PersistHelper.saveUserInfo(user, getApplicationContext());
-                                    startActivity(new Intent(RegisterActivity.this,
-                                            HomeHolderActivity.class));
-                                    finish();
-                                }
-
-                                @Override
-                                public void onFailure(String message) {
-                                    Toast.makeText(RegisterActivity.this,
-                                            ServerResponseCodeParser.parseToString(message),
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            });
-                }
-            }
-        });
+                || passwordConfirm.isEmpty() || bio.isEmpty();
     }
 
     private void findViews() {
         mBtSubmit = findViewById(R.id.register_bt_submit);
         mEtName = findViewById(R.id.register_et_name);
         mEtUsername = findViewById(R.id.register_et_username);
+        mEtBio = findViewById(R.id.register_et_bio);
         mEtPassword = findViewById(R.id.register_et_password);
         mEtPasswordConfirm = findViewById(R.id.register_et_password_confirmation);
         mEtCPF = findViewById(R.id.register_et_cpf);
