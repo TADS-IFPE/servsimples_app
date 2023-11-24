@@ -196,6 +196,7 @@ public class ProfileFragment extends Fragment {
                                 if (ServSimplesAppLogger.ISLOGABLE)
                                     Toast.makeText(getContext(), "Serviço removido com sucesso",
                                             Toast.LENGTH_SHORT).show();
+                                retrieveUserProfileInfo();
                             }
 
                             @Override
