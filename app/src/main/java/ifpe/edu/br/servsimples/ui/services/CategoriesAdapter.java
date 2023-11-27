@@ -24,7 +24,7 @@ public class CategoriesAdapter extends BaseAdapter {
     private final Context mContext;
 
     public CategoriesAdapter(Context context, List<String> categories) {
-        if (categories == null) {
+        if (categories == null || categories.isEmpty()) {
             if (ServSimplesAppLogger.ISLOGABLE) {
                 ServSimplesAppLogger.e(TAG, "can't set adapter");
             }
@@ -53,7 +53,7 @@ public class CategoriesAdapter extends BaseAdapter {
         View v;
         CategoriesAdapter.ViewHolder holder;
         if (view == null) {
-            v =  LayoutInflater.from(mContext)
+            v = LayoutInflater.from(mContext)
                     .inflate(R.layout.categories_drowpdown_item, viewGroup, false);
             holder = new CategoriesAdapter.ViewHolder();
             holder.categoryName = v.findViewById(R.id.categories_dropdown_item_name);

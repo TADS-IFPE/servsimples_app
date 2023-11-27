@@ -33,6 +33,9 @@ public class ServicesHolderActivity extends AppCompatActivity
             Service currentService = getCurrentServiceFromIntent(getIntent());
             Fragment editService = AddServiceFragment.newInstance(currentService);
             openFragment(editService, false);
+        } else if (ServSimplesConstants.ACTION_SEARCH_SERVICE.equals(action)) {
+            Fragment searchService = SearchServiceFragment.newInstance();
+            openFragment(searchService, false);
         } else {
             Fragment addService = AddServiceFragment.newInstance();
             openFragment(addService, false);

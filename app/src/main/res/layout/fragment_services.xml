@@ -33,10 +33,10 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/tv_service_search"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Em breve algo novo aqui"
+                        android:text="Buscar Serviço"
                         android:textSize="@dimen/simple_form_fontsize"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

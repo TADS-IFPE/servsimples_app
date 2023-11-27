@@ -7,6 +7,7 @@ package ifpe.edu.br.servsimples.managers;
 
 import java.util.List;
 
+import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.model.User;
 
 public class IServerManagerInterfaceWrapper {
@@ -37,7 +38,11 @@ public class IServerManagerInterfaceWrapper {
                                   ServerCategoriesCallback categoriesCallback);
 
         void updateService(User user, ServerRequestCallback serviceCallback);
+
         void unregisterService(User user, ServerRequestCallback serviceCallback);
+
+        void getServicesByCategory(User currentUser,
+                                   IServerManagerInterfaceWrapper.ServerServicesCallback callback);
     }
 
     public interface ServerCategoriesCallback {
@@ -48,6 +53,12 @@ public class IServerManagerInterfaceWrapper {
 
     public interface ServerRequestCallback {
         void onSuccess(User user);
+
+        void onFailure(String message);
+    }
+
+    public interface ServerServicesCallback {
+        void onSuccess(List<Service> services);
 
         void onFailure(String message);
     }

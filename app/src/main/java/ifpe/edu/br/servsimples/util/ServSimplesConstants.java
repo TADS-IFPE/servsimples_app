@@ -14,6 +14,7 @@ public interface ServSimplesConstants {
 
     String ACTION_EDIT_PROFILE = "servsimples.com.action_edit_profile";
     String ACTION_EDIT_SERVICE = "servsimples.com.action_edit_service";
+    String ACTION_SEARCH_SERVICE = "servsimples.com.action_search_service";
     String CURRENT_SERVICE_NAME = "current-service-name";
     String CURRENT_SERVICE_DESCRIPTION = "current-service-description";
     String CURRENT_SERVICE_CATEGORY = "current-service-category";

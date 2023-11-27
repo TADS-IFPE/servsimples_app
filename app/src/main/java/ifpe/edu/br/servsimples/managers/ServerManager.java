@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 import ifpe.edu.br.servsimples.util.ServSimplesConstants;
@@ -281,6 +282,40 @@ public class ServerManager implements IServerManagerInterfaceWrapper.IServerUser
                     public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                         if (ServSimplesAppLogger.ISLOGABLE)
                             ServSimplesAppLogger.e(TAG, "unregisterService: onFailure:"
+                                    + t.getMessage());
+                        callback.onFailure(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void getServicesByCategory(User user,
+                                      IServerManagerInterfaceWrapper.ServerServicesCallback callback) {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "getServicesByCategory");
+        mConnectionManager
+                .getServSimplesConnection().create(ServicesInterfaceWrapper.ServiceServices.class)
+                .getServicesByCategory(RequestBody.create(MediaType.parse("application/json"),
+                        new Gson().toJson(user)))
+                .enqueue(new Callback<List<Service>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<List<Service>> call,
+                                           @NonNull Response<List<Service>> resp) {
+                        if (resp.isSuccessful() && resp.code() == ServSimplesConstants.HTTP_OK) {
+                            callback.onSuccess(resp.body());
+                        } else {
+                            if (ServSimplesAppLogger.ISLOGABLE)
+                                ServSimplesAppLogger.w(TAG, "getServicesByCategory not ok: status:"
+                                        + resp.code());
+                            callback.onFailure(String.valueOf(resp.code()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<List<Service>> call,
+                                          @NonNull Throwable t) {
+                        if (ServSimplesAppLogger.ISLOGABLE)
+                            ServSimplesAppLogger.e(TAG, "getServicesByCategory: onFailure:"
                                     + t.getMessage());
                         callback.onFailure(t.getMessage());
                     }

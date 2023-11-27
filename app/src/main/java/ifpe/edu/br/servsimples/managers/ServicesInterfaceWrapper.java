@@ -7,6 +7,7 @@ package ifpe.edu.br.servsimples.managers;
 
 import java.util.List;
 
+import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.model.User;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -47,6 +48,9 @@ public abstract class ServicesInterfaceWrapper {
 
         @POST("api/unregister/service")
         Call<User> unregisterService(@Body RequestBody requestBody);
+
+        @POST("api/get/service/by/category")
+        Call<List<Service>> getServicesByCategory(@Body RequestBody requestBody);
     }
 
     interface EventServices {
