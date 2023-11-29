@@ -33,6 +33,7 @@ import ifpe.edu.br.servsimples.ui.LoginActivity;
 import ifpe.edu.br.servsimples.ui.RegisterActivity;
 import ifpe.edu.br.servsimples.ui.services.MyServicesDropDownAdapter;
 import ifpe.edu.br.servsimples.ui.services.ServicesHolderActivity;
+import ifpe.edu.br.servsimples.util.DialogUtils;
 import ifpe.edu.br.servsimples.util.PersistHelper;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 import ifpe.edu.br.servsimples.util.ServSimplesConstants;
@@ -171,12 +172,56 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setUpListeners() {
-        mLogout.setOnClickListener(view -> logOut());
+        mLogout.setOnClickListener(view -> DialogUtils.showDialog(
+                getContext(),
+                "Sair",
+                "Deseja realmente sair da aplicação?",
+                new DialogUtils.DialogUtilsCallback() {
+                    @Override
+                    public void onYes() {
+                        logOut();
+                    }
+
+                    @Override
+                    public void onNo() {
+
+                    }
+                }));
+        mDeleteUser.setOnClickListener(View -> DialogUtils.showDialog(
+                getContext(),
+                "Excluir conta",
+                PersistHelper.getCurrentUser(getContext()).getName() +
+                        ", deseja realmente excluir sua conta? Seus dados não poderão ser recuperados",
+                new DialogUtils.DialogUtilsCallback() {
+                    @Override
+                    public void onYes() {
+                        deleteProfile();
+                    }
+
+                    @Override
+                    public void onNo() {
+
+                    }
+                }));
+        mTvDeleteService.setOnClickListener(View -> DialogUtils.showDialog(
+                getContext(),
+                "Excluir Serviço",
+                PersistHelper.getCurrentUser(getContext()).getName() +
+                        ", deseja realmente excluir " + mCurrentService.getName() + " ?",
+                new DialogUtils.DialogUtilsCallback() {
+                    @Override
+                    public void onYes() {
+                        deleteService();
+                    }
+
+                    @Override
+                    public void onNo() {
+
+                    }
+                }));
         mEditProfile.setOnClickListener(view -> editProfile());
-        mDeleteUser.setOnClickListener(View -> deleteProfile());
         mTvCreateService.setOnClickListener(View -> createService());
         mTvEditService.setOnClickListener(View -> editService());
-        mTvDeleteService.setOnClickListener(View -> deleteService());
     }
 
     private void deleteService() {

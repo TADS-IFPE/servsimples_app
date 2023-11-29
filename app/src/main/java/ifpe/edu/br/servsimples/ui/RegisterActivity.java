@@ -57,6 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void performRegisterUser() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "performRegisterUser:");
+        setTitle("Registrar");
         mBtSubmit.setText("Registrar");
         mBtSubmit.setOnClickListener(view -> {
             String name = mEtName.getText().toString();
@@ -128,6 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void performEditUser() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "performEditUser:");
+        setTitle("Editar Usuário");
         User user = PersistHelper.getCurrentUser(getApplicationContext());
         retrieveUserInfo(user);
     }

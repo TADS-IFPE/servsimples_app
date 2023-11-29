@@ -17,14 +17,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/login_tv_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="75dp"
-                android:text="Bem vindo ao ServSimples!"
+                android:layout_marginTop="45dp"
+                android:text="Bem Vindo"
                 android:textColor="@color/servsimples_logo_color_green"
                 android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -33,9 +33,9 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/login_icon_card"
-                android:layout_width="226dp"
-                android:layout_height="125dp"
-                android:layout_marginTop="55dp"
+                android:layout_width="327dp"
+                android:layout_height="141dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="56dp"
                 app:cardCornerRadius="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/login_et_username"
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="52dp"
-                android:hint="Login"
+                android:hint="Entrar"
                 android:textColor="@color/servsimples_logo_color_green"
                 android:textSize="@dimen/simple_form_fontsize"
                 app:layout_constraintEnd_toEndOf="parent"

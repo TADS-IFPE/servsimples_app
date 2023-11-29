@@ -36,7 +36,7 @@
                     <TextView
                         android:id="@+id/tv_service_banner_title"
                         android:layout_width="263dp"
-                        android:layout_height="@dimen/card_title_height"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
                         android:gravity="center"
                         android:text="Criar novo serviço"
