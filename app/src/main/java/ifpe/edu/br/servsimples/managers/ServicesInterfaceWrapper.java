@@ -31,6 +31,9 @@ public abstract class ServicesInterfaceWrapper {
 
         @POST("api/unregister/user")
         Call<User> removeUser(@Body RequestBody requestBody);
+
+        @POST("api/get/user/by/service")
+        Call<User> getUserFromService(@Body RequestBody requestBody);
     }
 
     interface ServiceServices {

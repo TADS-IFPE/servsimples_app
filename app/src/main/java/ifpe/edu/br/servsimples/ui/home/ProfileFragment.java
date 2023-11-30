@@ -321,15 +321,15 @@ public class ProfileFragment extends Fragment {
         mLogout = view.findViewById(R.id.tv_profile_miscellaneous_logout);
         mEditProfile = view.findViewById(R.id.tv_profile_miscellaneous_edit_profile);
         mDeleteUser = view.findViewById(R.id.tv_profile_miscellaneous_delete_profile);
-        mTvUserName = view.findViewById(R.id.tv_profile_name);
-        mTvUserBio = view.findViewById(R.id.tv_profile_bio);
+        mTvUserName = view.findViewById(R.id.servicedetail_professionalinfo_tv_name);
+        mTvUserBio = view.findViewById(R.id.servicedetail_professionalinfo_tv_bio);
 
         //Services
-        mTvServiceName = view.findViewById(R.id.tv_profile_services_name);
-        mTvServiceDescription = view.findViewById(R.id.tv_profile_services_description);
-        mTvServiceCategory = view.findViewById(R.id.tv_profile_services_category);
-        mTvServiceValue = view.findViewById(R.id.tv_profile_services_value);
-        mTvServiceTime = view.findViewById(R.id.tv_profile_services_time);
+        mTvServiceName = view.findViewById(R.id.servicedetail_infoservice_tv_name);
+        mTvServiceDescription = view.findViewById(R.id.servicedetail_infoservice_tv_description);
+        mTvServiceCategory = view.findViewById(R.id.servicedetail_infoservice_tv_category);
+        mTvServiceValue = view.findViewById(R.id.servicedetail_infoservice_tv_value);
+        mTvServiceTime = view.findViewById(R.id.servicedetail_infoservice_tv_time);
         mSpServices = view.findViewById(R.id.sp_services);
         mServicesCard = view.findViewById(R.id.card_services_info);
         mTvCreateService = view.findViewById(R.id.tv_profile_services_settings_create_service);

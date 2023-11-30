@@ -28,6 +28,8 @@ public class IServerManagerInterfaceWrapper {
         void updateUser(User user,
                         ServerRequestCallback callback);
 
+        void getProfessionalUserFromService(User user,
+                                            ServerRequestCallback callback);
     }
 
     public interface IServerServiceManager {
