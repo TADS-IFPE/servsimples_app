@@ -31,6 +31,7 @@ import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.ui.LoginActivity;
 import ifpe.edu.br.servsimples.ui.RegisterActivity;
+import ifpe.edu.br.servsimples.ui.agenda.AgendaHolderActivity;
 import ifpe.edu.br.servsimples.ui.services.MyServicesDropDownAdapter;
 import ifpe.edu.br.servsimples.ui.services.ServicesHolderActivity;
 import ifpe.edu.br.servsimples.util.DialogUtils;
@@ -64,14 +65,18 @@ public class ProfileFragment extends Fragment {
     private TextView mTvDeleteService;
     private Spinner mSpServices;
     private CardView mServicesCard;
-
+    private CardView mServicesSettingsCard;
     private Service mCurrentService;
+
+    // Agenda
+    private TextView mTvAddAvailability;
+    private CardView mAgendaSettingsCard;
 
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message message) {
             final int what = message.what;
             switch (what) {
-                case GET_USER_OK:
+                case GET_USER_OK -> {
                     mTvUserName.setText(mcurrentUser.getName());
                     mTvUserBio.setText(mcurrentUser.getBio());
                     List<Service> services = mcurrentUser.getServices();
@@ -79,6 +84,8 @@ public class ProfileFragment extends Fragment {
                         enableDisableServicesFields(View.GONE);
                     } else {
                         enableDisableServicesFields(View.VISIBLE);
+                        setNonProfessionalFieldsVisibility(isProfessionalUser() ?
+                                View.VISIBLE : View.GONE);
                         MyServicesDropDownAdapter servicesAdapter =
                                 new MyServicesDropDownAdapter(getContext(), services);
                         mSpServices.setAdapter(servicesAdapter);
@@ -101,10 +108,8 @@ public class ProfileFragment extends Fragment {
                                     }
                                 });
                     }
-                    break;
-                case GET_USER_NOT_OK:
-                    logOut();
-                    break;
+                }
+                case GET_USER_NOT_OK -> performLogOut();
             }
         }
     };
@@ -136,12 +141,24 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    private void setNonProfessionalFieldsVisibility(int visibility) {
+        mServicesCard.setVisibility(visibility);
+        mServicesSettingsCard.setVisibility(visibility);
+        mAgendaSettingsCard.setVisibility(visibility);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "onResume");
+        setNonProfessionalFieldsVisibility(isProfessionalUser() ? View.VISIBLE : View.GONE);
         retrieveUserProfileInfo();
+    }
+
+    private boolean isProfessionalUser() {
+        return User.UserType.PROFESSIONAL ==
+                PersistHelper.getCurrentUser(getContext()).getUserType();
     }
 
     private void retrieveUserProfileInfo() {
@@ -172,22 +189,35 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setUpListeners() {
-        mLogout.setOnClickListener(view -> DialogUtils.showDialog(
+        mLogout.setOnClickListener(view -> logout());
+        mDeleteUser.setOnClickListener(View -> deleteUser());
+        mTvDeleteService.setOnClickListener(View -> deleteService());
+        mEditProfile.setOnClickListener(view -> editProfile());
+        mTvCreateService.setOnClickListener(View -> createService());
+        mTvEditService.setOnClickListener(View -> editService());
+        mTvAddAvailability.setOnClickListener(v -> addAvailability());
+    }
+
+    private void logout() {
+        DialogUtils.showDialog(
                 getContext(),
                 "Sair",
                 "Deseja realmente sair da aplicação?",
                 new DialogUtils.DialogUtilsCallback() {
                     @Override
                     public void onYes() {
-                        logOut();
+                        performLogOut();
                     }
 
                     @Override
                     public void onNo() {
 
                     }
-                }));
-        mDeleteUser.setOnClickListener(View -> DialogUtils.showDialog(
+                });
+    }
+
+    private void deleteUser() {
+        DialogUtils.showDialog(
                 getContext(),
                 "Excluir conta",
                 PersistHelper.getCurrentUser(getContext()).getName() +
@@ -195,15 +225,18 @@ public class ProfileFragment extends Fragment {
                 new DialogUtils.DialogUtilsCallback() {
                     @Override
                     public void onYes() {
-                        deleteProfile();
+                        performDeleteUser();
                     }
 
                     @Override
                     public void onNo() {
 
                     }
-                }));
-        mTvDeleteService.setOnClickListener(View -> DialogUtils.showDialog(
+                });
+    }
+
+    private void deleteService() {
+        DialogUtils.showDialog(
                 getContext(),
                 "Excluir Serviço",
                 PersistHelper.getCurrentUser(getContext()).getName() +
@@ -211,20 +244,24 @@ public class ProfileFragment extends Fragment {
                 new DialogUtils.DialogUtilsCallback() {
                     @Override
                     public void onYes() {
-                        deleteService();
+                        performDeleteService();
                     }
 
                     @Override
                     public void onNo() {
 
                     }
-                }));
-        mEditProfile.setOnClickListener(view -> editProfile());
-        mTvCreateService.setOnClickListener(View -> createService());
-        mTvEditService.setOnClickListener(View -> editService());
+                });
     }
 
-    private void deleteService() {
+    private void addAvailability() {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "addAvailability");
+        Intent intent = new Intent(getContext(), AgendaHolderActivity.class);
+        startActivity(intent);
+    }
+
+    private void performDeleteService() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "deleteService");
         User currentUser = PersistHelper.getCurrentUser(getContext());
@@ -277,7 +314,7 @@ public class ProfileFragment extends Fragment {
         startActivity(new Intent(getActivity(), ServicesHolderActivity.class));
     }
 
-    private void deleteProfile() {
+    private void performDeleteUser() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "deleteProfile");
         ServerManager.getInstance()
@@ -308,7 +345,7 @@ public class ProfileFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void logOut() {
+    private void performLogOut() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "logOut");
         PersistHelper.saveUserInfo(new User(), getContext());
@@ -332,8 +369,13 @@ public class ProfileFragment extends Fragment {
         mTvServiceTime = view.findViewById(R.id.servicedetail_infoservice_tv_time);
         mSpServices = view.findViewById(R.id.sp_services);
         mServicesCard = view.findViewById(R.id.card_services_info);
+        mServicesSettingsCard = view.findViewById(R.id.card_services_setting);
         mTvCreateService = view.findViewById(R.id.tv_profile_services_settings_create_service);
         mTvEditService = view.findViewById(R.id.tv_profile_services_settings_edit_service);
         mTvDeleteService = view.findViewById(R.id.tv_profile_services_settings_delete_service);
+
+        //Agenda
+        mTvAddAvailability = view.findViewById(R.id.tv_profile_agenda_settings_create_availability);
+        mAgendaSettingsCard = view.findViewById(R.id.card_agenda_setting);
     }
 }

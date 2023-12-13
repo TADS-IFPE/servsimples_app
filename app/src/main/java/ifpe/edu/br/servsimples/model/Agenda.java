@@ -13,6 +13,7 @@ public class Agenda {
 
     private Long id;
     private List<Event> events = new ArrayList<>();
+    private List<Availability> availabilities = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -28,5 +29,13 @@ public class Agenda {
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+
+    public List<Availability> getAvailabilities() {
+        return availabilities;
+    }
+
+    public void setAvailabilities(List<Availability> availabilities) {
+        this.availabilities = availabilities;
     }
 }

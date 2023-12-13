@@ -16,9 +16,9 @@ public class User {
     private final List<Notification> notifications = new ArrayList<>();
     private final List<Service> services = new ArrayList<>();
     private String name;
+    private String bio;
     private String cpf;
     private String userName;
-    private String bio;
     private String password;
     private UserType userType = UserType.USER;
     private String token;
