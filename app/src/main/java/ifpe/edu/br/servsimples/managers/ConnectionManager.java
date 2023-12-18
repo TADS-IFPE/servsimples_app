@@ -37,5 +37,4 @@ public class ConnectionManager {
     public Retrofit getServSimplesConnection() {
         return mServSimplesServerConnection;
     }
-
 }

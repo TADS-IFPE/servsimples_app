@@ -90,7 +90,7 @@ public class AddServiceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new Thread(() -> ServerManager.getInstance()
+        new Thread(() -> ServerManager.getsInstance()
                 .getServiceCategories(PersistHelper.getCurrentUser(getContext()),
                         new IServerManagerInterfaceWrapper.ServerCategoriesCallback() {
                             @Override
@@ -138,7 +138,7 @@ public class AddServiceFragment extends Fragment {
             User user = PersistHelper.getCurrentUser(getContext());
             Service service = getServiceFromView();
             user.addService(service);
-            ServerManager.getInstance()
+            ServerManager.getsInstance()
                     .updateService(user,
                             new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                                 @Override
@@ -178,7 +178,7 @@ public class AddServiceFragment extends Fragment {
             User user = PersistHelper.getCurrentUser(getContext());
             Service service = getServiceFromView();
             user.addService(service);
-            ServerManager.getInstance()
+            ServerManager.getsInstance()
                     .registerService(user,
                             new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                                 @Override

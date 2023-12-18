@@ -56,6 +56,10 @@ public abstract class ServicesInterfaceWrapper {
         Call<List<Service>> getServicesByCategory(@Body RequestBody requestBody);
     }
 
+    interface AvailabilityServices {
+        @POST("api/register/user/availability")
+        Call<Integer> registerAvailability(@Body RequestBody requestBody);
+    }
     interface EventServices {
 
     }

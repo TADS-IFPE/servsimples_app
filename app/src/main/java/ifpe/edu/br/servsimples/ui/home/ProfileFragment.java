@@ -70,6 +70,7 @@ public class ProfileFragment extends Fragment {
 
     // Agenda
     private TextView mTvAddAvailability;
+    private TextView mTvShowAvailabilities;
     private CardView mAgendaSettingsCard;
 
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
@@ -165,7 +166,7 @@ public class ProfileFragment extends Fragment {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "retrieveUserProfileInfo");
 
-        new Thread(() -> ServerManager.getInstance()
+        new Thread(() -> ServerManager.getsInstance()
                 .getUser(PersistHelper.getCurrentUser(getContext()),
                         new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                             @Override
@@ -196,6 +197,15 @@ public class ProfileFragment extends Fragment {
         mTvCreateService.setOnClickListener(View -> createService());
         mTvEditService.setOnClickListener(View -> editService());
         mTvAddAvailability.setOnClickListener(v -> addAvailability());
+        mTvShowAvailabilities.setOnClickListener(View -> showAvailabilities());
+    }
+
+    private void showAvailabilities() {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "showAvailabilities");
+        Intent intent = new Intent(getContext(), AgendaHolderActivity.class);
+        intent.setAction(ServSimplesConstants.ACTION_SHOW_AVAILABILITIES);
+        startActivity(intent);
     }
 
     private void logout() {
@@ -203,9 +213,9 @@ public class ProfileFragment extends Fragment {
                 getContext(),
                 "Sair",
                 "Deseja realmente sair da aplicação?",
-                new DialogUtils.DialogUtilsCallback() {
+                new DialogUtils.IDialogYesNoCallback() {
                     @Override
-                    public void onYes() {
+                    public void onOk() {
                         performLogOut();
                     }
 
@@ -222,9 +232,9 @@ public class ProfileFragment extends Fragment {
                 "Excluir conta",
                 PersistHelper.getCurrentUser(getContext()).getName() +
                         ", deseja realmente excluir sua conta? Seus dados não poderão ser recuperados",
-                new DialogUtils.DialogUtilsCallback() {
+                new DialogUtils.IDialogYesNoCallback() {
                     @Override
-                    public void onYes() {
+                    public void onOk() {
                         performDeleteUser();
                     }
 
@@ -241,9 +251,9 @@ public class ProfileFragment extends Fragment {
                 "Excluir Serviço",
                 PersistHelper.getCurrentUser(getContext()).getName() +
                         ", deseja realmente excluir " + mCurrentService.getName() + " ?",
-                new DialogUtils.DialogUtilsCallback() {
+                new DialogUtils.IDialogYesNoCallback() {
                     @Override
-                    public void onYes() {
+                    public void onOk() {
                         performDeleteService();
                     }
 
@@ -258,6 +268,7 @@ public class ProfileFragment extends Fragment {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "addAvailability");
         Intent intent = new Intent(getContext(), AgendaHolderActivity.class);
+        intent.setAction(ServSimplesConstants.ACTION_ADD_AVAILABILITY);
         startActivity(intent);
     }
 
@@ -266,7 +277,7 @@ public class ProfileFragment extends Fragment {
             ServSimplesAppLogger.d(TAG, "deleteService");
         User currentUser = PersistHelper.getCurrentUser(getContext());
         currentUser.addService(mCurrentService);
-        ServerManager.getInstance()
+        ServerManager.getsInstance()
                 .unregisterService(currentUser,
                         new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                             @Override
@@ -317,7 +328,7 @@ public class ProfileFragment extends Fragment {
     private void performDeleteUser() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "deleteProfile");
-        ServerManager.getInstance()
+        ServerManager.getsInstance()
                 .unregisterUser(PersistHelper.getCurrentUser(getContext()),
                         new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                             @Override
@@ -376,6 +387,7 @@ public class ProfileFragment extends Fragment {
 
         //Agenda
         mTvAddAvailability = view.findViewById(R.id.tv_profile_agenda_settings_create_availability);
+        mTvShowAvailabilities = view.findViewById(R.id.tv_profile_agenda_settings_show_availabilities);
         mAgendaSettingsCard = view.findViewById(R.id.card_agenda_setting);
     }
 }

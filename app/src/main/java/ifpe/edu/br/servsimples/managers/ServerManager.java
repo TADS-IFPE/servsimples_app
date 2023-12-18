@@ -21,22 +21,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ServerManager implements IServerManagerInterfaceWrapper.IServerUserManager,
-        IServerManagerInterfaceWrapper.IServerServiceManager {
+public class ServerManager implements
+        IServerManagerInterfaceWrapper.IUserManager,
+        IServerManagerInterfaceWrapper.IServiceManager,
+        IServerManagerInterfaceWrapper.IAvailabilityManager {
 
     private static final String TAG = ServerManager.class.getSimpleName();
-    private static ServerManager instance;
+    private static ServerManager sInstance;
     private final ConnectionManager mConnectionManager;
 
     private ServerManager() {
         mConnectionManager = ConnectionManager.getInstance();
     }
 
-    public static ServerManager getInstance() {
-        if (instance == null) {
-            instance = new ServerManager();
+    public static ServerManager getsInstance() {
+        if (sInstance == null) {
+            sInstance = new ServerManager();
         }
-        return instance;
+        return sInstance;
     }
 
     @Override
@@ -387,6 +389,37 @@ public class ServerManager implements IServerManagerInterfaceWrapper.IServerUser
                             ServSimplesAppLogger.e(TAG, "getServiceCategories: onFailure:"
                                     + t.getMessage());
                         callback.onFailure(t.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void registerAvailability(User user,
+                                     IServerManagerInterfaceWrapper.RegisterAvailabilityCallback callback) {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "registerAvailability");
+        mConnectionManager
+                .getServSimplesConnection().create(ServicesInterfaceWrapper.AvailabilityServices.class)
+                .registerAvailability(RequestBody.create(MediaType.parse("application/json"),
+                        new Gson().toJson(user)))
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Integer> call,
+                                           @NonNull Response<Integer> resp) {
+                        if (resp.isSuccessful() && resp.code() == ServSimplesConstants.HTTP_OK) {
+                            ServSimplesAppLogger.d(TAG, "registerAvailability(): server code:" + resp.body());
+                            callback.onSuccess(resp.body());
+                        } else {
+                            callback.onFailure();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Integer> call,
+                                          @NonNull Throwable t) {
+                        ServSimplesAppLogger.w(TAG, "getServiceCategories error:"
+                                + t.getMessage());
+                        callback.onFailure();
                     }
                 });
     }

@@ -57,9 +57,9 @@ public class ServiceListViewAdapter extends BaseAdapter {
             v = LayoutInflater.from(mContext)
                     .inflate(R.layout.service_list_item, viewGroup, false);
             holder = new ServiceListViewAdapter.ViewHolder();
-            holder.serviceName = v.findViewById(R.id.tv_service_item_name);
-            holder.serviceValue = v.findViewById(R.id.tv_service_item_value);
-            holder.serviceTime = v.findViewById(R.id.tv_service_item_time);
+            holder.serviceName = v.findViewById(R.id.tv_availability_item_date_value);
+            holder.serviceValue = v.findViewById(R.id.tv_availability_item_starttime_label_value);
+            holder.serviceTime = v.findViewById(R.id.tv_availability_item_enttime_value);
             v.setTag(holder);
         } else {
             v = view;

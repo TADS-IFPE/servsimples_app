@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        mServSimplesServerManager = ServerManager.getInstance();
+        mServSimplesServerManager = ServerManager.getsInstance();
         findViews();
         Intent intent = getIntent();
         if (intent != null && ServSimplesConstants.ACTION_EDIT_PROFILE.equals(intent.getAction())) {

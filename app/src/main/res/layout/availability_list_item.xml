@@ -15,7 +15,6 @@
         app:cardCornerRadius="@dimen/card_corner">
 
         <ImageView
-            android:id="@+id/imageView3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#6293C55D" />
@@ -30,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="15dp"
-                android:text="Serviço:"
+                android:text="Data:"
                 android:textSize="@dimen/card_info"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -46,14 +45,14 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_availability_item_date_label"
                 app:layout_constraintTop_toTopOf="@+id/tv_availability_item_date_label"
                 app:layout_constraintVertical_bias="0.0"
-                tools:text="Exemplo de serviço" />
+                tools:text="20/08/1993" />
 
             <TextView
                 android:id="@+id/tv_availability_item_starttime_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Valor:"
+                android:text="Hora início:"
                 android:textSize="@dimen/card_info"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/tv_availability_item_date_label"
@@ -68,7 +67,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tv_availability_item_starttime_label"
                 app:layout_constraintStart_toEndOf="@+id/tv_availability_item_starttime_label"
                 app:layout_constraintTop_toTopOf="@+id/tv_availability_item_starttime_label"
-                tools:text="R$999,99" />
+                tools:text="18:30" />
 
             <TextView
                 android:id="@+id/tv_availability_item_enttime_label"
@@ -76,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:text="Tempo:"
+                android:text="Hora fim:"
                 android:textSize="@dimen/card_info"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -93,7 +92,7 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_availability_item_enttime_label"
                 app:layout_constraintTop_toTopOf="@+id/tv_availability_item_enttime_label"
                 app:layout_constraintVertical_bias="0.0"
-                tools:text="Hora" />
+                tools:text="20:20" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

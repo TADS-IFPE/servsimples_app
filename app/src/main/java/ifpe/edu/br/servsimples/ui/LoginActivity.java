@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setTitle("Entrar");
-        mServSimplesServerManager = ServerManager.getInstance();
+        mServSimplesServerManager = ServerManager.getsInstance();
         findViews();
         setListeners();
     }
