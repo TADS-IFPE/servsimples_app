@@ -18,7 +18,7 @@ import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 public class AgendaHolderActivity extends AppCompatActivity
         implements UIInterfaceWrapper.FragmentUtil {
 
-    private String TAG = AgendaHolderActivity.class.getSimpleName();
+    private final String TAG = AgendaHolderActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,11 @@ public class AgendaHolderActivity extends AppCompatActivity
         setTitle("Agenda");
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "onCreate");
-        Fragment registerAvailabilityFragment = RegisterAvailabilityFragment.newInstance();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(RegisterAvailabilityFragment.KEY_REGISTER_STATE_CODE, RegisterAvailabilityFragment.PICK_DATE);
+
+        Fragment registerAvailabilityFragment = RegisterAvailabilityFragment.newInstance(bundle);
         openFragment(registerAvailabilityFragment, false);
     }
 
@@ -37,6 +41,7 @@ public class AgendaHolderActivity extends AppCompatActivity
             FragmentTransaction transaction =
                     getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.agenda_fragment_holder, fragment);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             if (addToBackStack) {
                 transaction.addToBackStack(null);
             }

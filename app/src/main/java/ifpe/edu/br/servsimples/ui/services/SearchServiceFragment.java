@@ -95,7 +95,7 @@ public class SearchServiceFragment extends Fragment {
         User currentUser = PersistHelper.getCurrentUser(getContext());
         currentUser.addService(service);
 
-        new Thread(() -> ServerManager.getInstance()
+        new Thread(() -> ServerManager.getsInstance()
                 .getServicesByCategory(currentUser,
                         new IServerManagerInterfaceWrapper.ServerServicesCallback() {
                             @Override
@@ -115,7 +115,7 @@ public class SearchServiceFragment extends Fragment {
     }
 
     private void retrieveCategoriesInfo() {
-        new Thread(() -> ServerManager.getInstance()
+        new Thread(() -> ServerManager.getsInstance()
                 .getServiceCategories(PersistHelper.getCurrentUser(getContext()),
                         new IServerManagerInterfaceWrapper.ServerCategoriesCallback() {
                             @Override

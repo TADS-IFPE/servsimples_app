@@ -165,7 +165,7 @@ public class ProfileFragment extends Fragment {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "retrieveUserProfileInfo");
 
-        new Thread(() -> ServerManager.getInstance()
+        new Thread(() -> ServerManager.getsInstance()
                 .getUser(PersistHelper.getCurrentUser(getContext()),
                         new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                             @Override
@@ -203,9 +203,9 @@ public class ProfileFragment extends Fragment {
                 getContext(),
                 "Sair",
                 "Deseja realmente sair da aplicação?",
-                new DialogUtils.DialogUtilsCallback() {
+                new DialogUtils.IDialogYesNoCallback() {
                     @Override
-                    public void onYes() {
+                    public void onOk() {
                         performLogOut();
                     }
 
@@ -222,9 +222,9 @@ public class ProfileFragment extends Fragment {
                 "Excluir conta",
                 PersistHelper.getCurrentUser(getContext()).getName() +
                         ", deseja realmente excluir sua conta? Seus dados não poderão ser recuperados",
-                new DialogUtils.DialogUtilsCallback() {
+                new DialogUtils.IDialogYesNoCallback() {
                     @Override
-                    public void onYes() {
+                    public void onOk() {
                         performDeleteUser();
                     }
 
@@ -241,9 +241,9 @@ public class ProfileFragment extends Fragment {
                 "Excluir Serviço",
                 PersistHelper.getCurrentUser(getContext()).getName() +
                         ", deseja realmente excluir " + mCurrentService.getName() + " ?",
-                new DialogUtils.DialogUtilsCallback() {
+                new DialogUtils.IDialogYesNoCallback() {
                     @Override
-                    public void onYes() {
+                    public void onOk() {
                         performDeleteService();
                     }
 
@@ -266,7 +266,7 @@ public class ProfileFragment extends Fragment {
             ServSimplesAppLogger.d(TAG, "deleteService");
         User currentUser = PersistHelper.getCurrentUser(getContext());
         currentUser.addService(mCurrentService);
-        ServerManager.getInstance()
+        ServerManager.getsInstance()
                 .unregisterService(currentUser,
                         new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                             @Override
@@ -317,7 +317,7 @@ public class ProfileFragment extends Fragment {
     private void performDeleteUser() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "deleteProfile");
-        ServerManager.getInstance()
+        ServerManager.getsInstance()
                 .unregisterUser(PersistHelper.getCurrentUser(getContext()),
                         new IServerManagerInterfaceWrapper.ServerRequestCallback() {
                             @Override

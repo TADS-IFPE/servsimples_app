@@ -40,7 +40,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
-                        android:text="Adicionar Disponibilidade"
+                        android:text="Criar Disponibilidade"
                         android:textAlignment="center"
                         android:textColor="@color/servsimples_logo_color_green"
                         android:textSize="@dimen/card_title"
@@ -51,99 +51,46 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_addavailability_date_label"
+                        android:id="@+id/addavilability_context"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="23dp"
-                        android:layout_marginTop="45dp"
-                        android:text="Data:"
+                        android:layout_marginTop="20dp"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintEnd_toEndOf="@+id/addavilability_label"
+                        app:layout_constraintStart_toStartOf="@+id/addavilability_label"
+                        app:layout_constraintTop_toBottomOf="@+id/addavilability_label" />
+
+                    <TextView
+                        android:id="@+id/tv_addavailability_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="116dp"
                         android:textSize="@dimen/card_info"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/addavilability_label" />
 
                     <TextView
-                        android:id="@+id/tv_addavailability_date"
+                        android:id="@+id/tv_addavailability_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="18/12/23"
                         android:textSize="@dimen/card_info"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_addavailability_date_label"
-                        app:layout_constraintStart_toEndOf="@+id/tv_addavailability_date_label"
-                        app:layout_constraintTop_toTopOf="@+id/tv_addavailability_date_label"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_addavailability_label"
+                        app:layout_constraintStart_toEndOf="@+id/tv_addavailability_label"
+                        app:layout_constraintTop_toTopOf="@+id/tv_addavailability_label"
                         app:layout_constraintVertical_bias="0.0" />
 
                     <Button
-                        android:id="@+id/bt_addavailability_date"
+                        android:id="@+id/bt_addavailability_select"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="25dp"
                         android:text="Selecionar Data"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_addavailability_date"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_addavailability_value"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_addavailability_date" />
-
-                    <TextView
-                        android:id="@+id/tv_addavailability_timeStart_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="45dp"
-                        android:text="início:"
-                        android:textSize="@dimen/card_info"
-                        app:layout_constraintStart_toStartOf="@+id/tv_addavailability_date_label"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_addavailability_date_label" />
-
-                    <TextView
-                        android:id="@+id/tv_addavailability_timeStart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="14:30"
-                        android:textSize="@dimen/card_info"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_addavailability_timeStart_label"
-                        app:layout_constraintStart_toEndOf="@+id/tv_addavailability_timeStart_label"
-                        app:layout_constraintTop_toTopOf="@+id/tv_addavailability_timeStart_label"
-                        app:layout_constraintVertical_bias="0.0" />
-
-                    <Button
-                        android:id="@+id/bt_addavailability_timeStart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Selecionar Início"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_addavailability_timeStart"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_addavailability_date"
-                        app:layout_constraintStart_toStartOf="@+id/bt_addavailability_date"
-                        app:layout_constraintTop_toTopOf="@+id/tv_addavailability_timeStart" />
-
-                    <TextView
-                        android:id="@+id/tv_addavailability_timeEnd_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="45dp"
-                        android:text="Fim:"
-                        android:textSize="@dimen/card_info"
-                        app:layout_constraintStart_toStartOf="@+id/tv_addavailability_timeStart_label"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_addavailability_timeStart_label" />
-
-                    <TextView
-                        android:id="@+id/tv_addavailability_timeEnd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="18:30"
-                        android:textSize="@dimen/card_info"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_addavailability_timeEnd_label"
-                        app:layout_constraintStart_toStartOf="@+id/tv_addavailability_timeStart"
-                        app:layout_constraintTop_toTopOf="@+id/tv_addavailability_timeEnd_label" />
-
-                    <Button
-                        android:id="@+id/bt_addavailability_timeEnd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Selecionar Fim"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_addavailability_timeEnd"
-                        app:layout_constraintEnd_toEndOf="@+id/bt_addavailability_timeStart"
-                        app:layout_constraintStart_toStartOf="@+id/bt_addavailability_timeStart"
-                        app:layout_constraintTop_toTopOf="@+id/tv_addavailability_timeEnd" />
+                        app:layout_constraintTop_toTopOf="@+id/tv_addavailability_value" />
 
                     <Button
                         android:id="@+id/bt_addavailability_bubmit"
@@ -152,8 +99,10 @@
                         android:text="Adicionar"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.501"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/bt_addavailability_timeEnd" />
+                        app:layout_constraintTop_toBottomOf="@+id/bt_addavailability_select"
+                        app:layout_constraintVertical_bias="0.663" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -107,7 +107,7 @@ class ServiceDetailFragment : Fragment() {
         currentUser.services.add(mCurrentService)
 
         Thread {
-            ServerManager.getInstance()
+            ServerManager.getsInstance()
                 .getProfessionalUserFromService(currentUser, callback)
         }.start()
     }

@@ -12,7 +12,7 @@ import ifpe.edu.br.servsimples.model.User;
 
 public class IServerManagerInterfaceWrapper {
 
-    public interface IServerUserManager {
+    public interface IUserManager {
         void registerUser(User user,
                           ServerRequestCallback callback);
 
@@ -32,7 +32,7 @@ public class IServerManagerInterfaceWrapper {
                                             ServerRequestCallback callback);
     }
 
-    public interface IServerServiceManager {
+    public interface IServiceManager {
         void registerService(User user,
                              ServerRequestCallback registrationCallback);
 
@@ -47,10 +47,21 @@ public class IServerManagerInterfaceWrapper {
                                    IServerManagerInterfaceWrapper.ServerServicesCallback callback);
     }
 
+    public interface IAvailabilityManager {
+        void registerAvailability(User user,
+                                  IServerManagerInterfaceWrapper.RegisterAvailabilityCallback callback);
+    }
+
     public interface ServerCategoriesCallback {
         void onSuccess(List<String> categories);
 
         void onFailure(String message);
+    }
+
+    public interface RegisterAvailabilityCallback {
+        void onSuccess(int response);
+
+        void onFailure();
     }
 
     public interface ServerRequestCallback {
