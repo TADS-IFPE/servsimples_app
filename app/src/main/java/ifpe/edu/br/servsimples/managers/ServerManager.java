@@ -423,4 +423,39 @@ public class ServerManager implements
                     }
                 });
     }
+
+    @Override
+    public void deleteAvailability(User user,
+                                   IServerManagerInterfaceWrapper.RegisterAvailabilityCallback callback) {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "deleteAvailability");
+        mConnectionManager
+                .getServSimplesConnection().create(ServicesInterfaceWrapper.AvailabilityServices.class)
+                .deleteAvailability(RequestBody.create(MediaType.parse("application/json"),
+                        new Gson().toJson(user)))
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Integer> call,
+                                           @NonNull Response<Integer> resp) {
+                        if (resp.isSuccessful() && resp.code() == ServSimplesConstants.HTTP_OK) {
+                            ServSimplesAppLogger.d(TAG, "deleteAvailability(): server code:" + resp.body());
+                            if (resp.body() == 0) {
+                                callback.onSuccess(resp.body());
+                            } else {
+                                callback.onFailure();
+                            }
+                        } else {
+                            callback.onFailure();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Integer> call,
+                                          @NonNull Throwable t) {
+                        ServSimplesAppLogger.w(TAG, "deleteAvailability error:"
+                                + t.getMessage());
+                        callback.onFailure();
+                    }
+                });
+    }
 }

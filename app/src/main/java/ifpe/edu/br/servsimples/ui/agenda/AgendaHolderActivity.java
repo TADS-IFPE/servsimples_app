@@ -35,14 +35,19 @@ public class AgendaHolderActivity extends AppCompatActivity
         String action = intent.getAction();
         if (action == null) return;
 
-        if (ServSimplesConstants.ACTION_ADD_AVAILABILITY.equals(action)) {
-            Bundle bundle = new Bundle();
-            bundle.putInt(RegisterAvailabilityFragment.KEY_REGISTER_STATE_CODE, RegisterAvailabilityFragment.PICK_DATE);
-            Fragment registerAvailabilityFragment = RegisterAvailabilityFragment.newInstance(bundle);
-            openFragment(registerAvailabilityFragment, false);
-        } else if (ServSimplesConstants.ACTION_SHOW_AVAILABILITIES.equals(action)) {
-            Fragment registerAvailabilityFragment = ShowAvailabilitiesFragment.newInstance();
-            openFragment(registerAvailabilityFragment, false);
+        switch (action) {
+            case ServSimplesConstants.ACTION_ADD_AVAILABILITY:
+                Bundle bundle = new Bundle();
+                bundle.putInt(RegisterAvailabilityFragment.KEY_REGISTER_STATE_CODE, RegisterAvailabilityFragment.PICK_DATE);
+                Fragment registerAvailabilityFragment = RegisterAvailabilityFragment.newInstance(bundle);
+                openFragment(registerAvailabilityFragment, false);
+                break;
+
+            case ServSimplesConstants.ACTION_SHOW_AVAILABILITIES:
+                Fragment showAvailabilitiesFragment = ShowAvailabilitiesFragment.newInstance();
+                openFragment(showAvailabilitiesFragment, false);
+                break;
+
         }
     }
 

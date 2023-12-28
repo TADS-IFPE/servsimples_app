@@ -46,7 +46,7 @@ public class RegisterAvailabilityFragment extends Fragment {
 
     // handler response code
     static final int SERVER_ERROR = -500;
-    static final int ADD_AVAILABILITY_OK = 0;
+    static final int ADD_AVAILABILITY_OK = 10;
 
     // Availability bundle keys
     static final String KEY_SELECTED_START_TIME = "key-selected-start-time";

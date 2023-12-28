@@ -50,6 +50,8 @@ public class IServerManagerInterfaceWrapper {
     public interface IAvailabilityManager {
         void registerAvailability(User user,
                                   IServerManagerInterfaceWrapper.RegisterAvailabilityCallback callback);
+        void deleteAvailability(User user,
+                                  IServerManagerInterfaceWrapper.RegisterAvailabilityCallback callback);
     }
 
     public interface ServerCategoriesCallback {

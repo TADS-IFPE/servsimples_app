@@ -59,7 +59,11 @@ public abstract class ServicesInterfaceWrapper {
     interface AvailabilityServices {
         @POST("api/register/user/availability")
         Call<Integer> registerAvailability(@Body RequestBody requestBody);
+
+        @POST("api/unregister/user/availability")
+        Call<Integer> deleteAvailability(@Body RequestBody requestBody);
     }
+
     interface EventServices {
 
     }

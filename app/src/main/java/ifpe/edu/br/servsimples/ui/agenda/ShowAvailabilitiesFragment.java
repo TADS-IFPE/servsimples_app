@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,17 +36,22 @@ public class ShowAvailabilitiesFragment extends Fragment {
     private static final String TAG = ShowAvailabilitiesFragment.class.getSimpleName();
     private static final int GET_USER_NOT_OK = 1;
     private static final int GET_USER_OK = 0;
+    private static final int DELETE_AVAILABILITY_OK = 2;
+    private static final int DELETE_AVAILABILITY_FAIL = 3;
 
     private ProgressDialog mProgressDialog;
     private User mcurrentUser;
     private UIInterfaceWrapper.FragmentUtil mFragmentUtil;
     private ListView mAvailabilitiesListView;
     private List<Availability> availabilities = new ArrayList<>();
+    private AvailabilityAdapter availabilityAdapter;
+    private int mAvailabilityPosition;
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message message) {
             final int what = message.what;
             switch (what) {
                 case GET_USER_OK:
+                    delay();
                     mProgressDialog.dismiss();
                     availabilities = mcurrentUser.getAgenda().getAvailabilities();
                     if (availabilities.isEmpty()) {
@@ -51,16 +59,31 @@ public class ShowAvailabilitiesFragment extends Fragment {
                                 "Usuário não possui disponibilidade", Toast.LENGTH_LONG).show();
                         mAvailabilitiesListView.setVisibility(View.GONE);
                     } else {
-                        AvailabilityAdapter availabilityAdapter =
+                        availabilityAdapter =
                                 new AvailabilityAdapter(getContext(),
                                         mcurrentUser.getAgenda().getAvailabilities());
                         mAvailabilitiesListView.setAdapter(availabilityAdapter);
                     }
                     break;
                 case GET_USER_NOT_OK:
+                    delay();
+                    mProgressDialog.dismiss();
                     Toast.makeText(getContext(),
                                     "Não foi possível recuperar informações", Toast.LENGTH_SHORT)
                             .show();
+                    break;
+
+                case DELETE_AVAILABILITY_OK:
+                    delay();
+                    availabilities.remove(mAvailabilityPosition);
+                    availabilityAdapter.notifyDataSetChanged();
+                    Toast.makeText(getContext(), "Item excluído", Toast.LENGTH_SHORT).show();
+                    mProgressDialog.dismiss();
+                    break;
+
+                case DELETE_AVAILABILITY_FAIL:
+                    delay();
+                    Toast.makeText(getContext(), "Não foi possível excluir", Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
                     break;
             }
@@ -68,6 +91,7 @@ public class ShowAvailabilitiesFragment extends Fragment {
     };
 
     public ShowAvailabilitiesFragment() {
+
     }
 
     public static ShowAvailabilitiesFragment newInstance() {
@@ -89,7 +113,58 @@ public class ShowAvailabilitiesFragment extends Fragment {
         requireActivity().setTitle("Exibir disponibilidades");
         View view = inflater.inflate(R.layout.fragment_show_availabilities, container, false);
         findViewsById(view);
+        setupListeners();
+        registerForContextMenu(mAvailabilitiesListView);
         return view;
+    }
+
+    private void setupListeners() {
+        mAvailabilitiesListView.setOnItemLongClickListener((parent, view, position, id) -> false);
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.lv_showavailability) {
+            menu.setHeaderTitle("Menu");
+            menu.add("Excluir");
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+        switch (item.getTitle().toString()) {
+            case "Excluir":
+                return removeAvailability(position);
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private boolean removeAvailability(int position) {
+        if (ServSimplesAppLogger.ISLOGABLE) {
+            ServSimplesAppLogger.d(TAG, "removeAvailability");
+        }
+        mProgressDialog.show();
+        User currentUser = PersistHelper.getCurrentUser(getContext());
+        currentUser.getAgenda().getAvailabilities().add(availabilities.get(position));
+        new Thread(() -> ServerManager.getsInstance()
+                .deleteAvailability(currentUser,
+                        new IServerManagerInterfaceWrapper.RegisterAvailabilityCallback() {
+                            @Override
+                            public void onSuccess(int code) {
+                                mAvailabilityPosition = position;
+                                mHandler.sendEmptyMessage(DELETE_AVAILABILITY_OK);
+                            }
+
+                            @Override
+                            public void onFailure() {
+                                mHandler.sendEmptyMessage(DELETE_AVAILABILITY_FAIL);
+                            }
+                        })).start();
+        return false;
     }
 
     @Override
@@ -132,5 +207,13 @@ public class ShowAvailabilitiesFragment extends Fragment {
                                 mHandler.sendEmptyMessage(GET_USER_NOT_OK);
                             }
                         })).start();
+    }
+
+    private void delay() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

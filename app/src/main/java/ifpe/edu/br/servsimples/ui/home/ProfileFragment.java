@@ -200,6 +200,14 @@ public class ProfileFragment extends Fragment {
         mTvShowAvailabilities.setOnClickListener(View -> showAvailabilities());
     }
 
+    private void deleteAvailability() {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "deleteAvailability");
+        Intent intent = new Intent(getContext(), AgendaHolderActivity.class);
+        intent.setAction(ServSimplesConstants.ACTION_DELETE_AVAILABILITIES);
+        startActivity(intent);
+    }
+
     private void showAvailabilities() {
         if (ServSimplesAppLogger.ISLOGABLE)
             ServSimplesAppLogger.d(TAG, "showAvailabilities");
