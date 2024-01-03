@@ -48,6 +48,17 @@ public class AgendaHolderActivity extends AppCompatActivity
                 openFragment(showAvailabilitiesFragment, false);
                 break;
 
+            case ServSimplesConstants.ACTION_SHOW_PROFESSIONAL_AVAILABILITY:
+                Bundle b = new Bundle();
+                Intent i = getIntent();
+                String profCPF = i.getStringExtra(ServSimplesConstants.USER_CPF);
+                if (profCPF == null) {
+                    ServSimplesAppLogger.e(TAG, "proffessional cpf is null");
+                }
+                b.putString(ServSimplesConstants.USER_CPF, profCPF);
+                Fragment showProfAvailabilities = ShowAvailabilitiesFragment.newInstance(b);
+                openFragment(showProfAvailabilities, false);
+                break;
         }
     }
 

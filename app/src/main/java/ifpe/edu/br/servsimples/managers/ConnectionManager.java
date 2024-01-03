@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConnectionManager {
 
-    private static final String SERVSIMPLES_SERVER_DOMAIN = "http://100.67.69.162:8080";
+    private static final String SERVSIMPLES_SERVER_DOMAIN = "http://192.168.1.15:8080";
     private static ConnectionManager instance;
     private static Retrofit mServSimplesServerConnection;
 

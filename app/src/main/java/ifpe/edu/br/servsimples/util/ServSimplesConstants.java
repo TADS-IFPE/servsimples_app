@@ -15,7 +15,7 @@ public interface ServSimplesConstants {
     String ACTION_EDIT_PROFILE = "servsimples.com.action_edit_profile";
     String ACTION_EDIT_SERVICE = "servsimples.com.action_edit_service";
     String ACTION_SEARCH_SERVICE = "servsimples.com.action_search_service";
-
+    String ACTION_SHOW_PROFESSIONAL_AVAILABILITY = "servsimples.com.action_search_professional_availability";
     String ACTION_SHOW_AVAILABILITIES = "action-show-availabilities";
     String ACTION_DELETE_AVAILABILITIES = "action-delete-availabilities";
     String ACTION_ADD_AVAILABILITY = "action-add-availability";
@@ -25,6 +25,7 @@ public interface ServSimplesConstants {
     String CURRENT_SERVICE_COST_VALUE = "current-service-coast-value";
     String CURRENT_SERVICE_COST_TIME = "current-service-coast-time";
     String CURRENT_SERVICE_ID = "current-service-id";
+    String USER_CPF = "user-cpf-12ewdv";
 
     int USER_EXISTS = 422;
     int USER_NOT_EXISTS = 416;

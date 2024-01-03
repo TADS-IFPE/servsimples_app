@@ -7,6 +7,7 @@ package ifpe.edu.br.servsimples.managers;
 
 import java.util.List;
 
+import ifpe.edu.br.servsimples.model.Availability;
 import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.model.User;
 import okhttp3.RequestBody;
@@ -62,9 +63,8 @@ public abstract class ServicesInterfaceWrapper {
 
         @POST("api/unregister/user/availability")
         Call<Integer> deleteAvailability(@Body RequestBody requestBody);
-    }
 
-    interface EventServices {
-
+        @POST("api/get/availability/by/professional")
+        Call<List<Availability>> getAvailabilitiesForProfessional(@Body RequestBody requestBody);
     }
 }

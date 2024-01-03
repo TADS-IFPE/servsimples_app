@@ -30,6 +30,7 @@ import ifpe.edu.br.servsimples.ui.UIInterfaceWrapper;
 import ifpe.edu.br.servsimples.util.DialogUtils;
 import ifpe.edu.br.servsimples.util.PersistHelper;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
+import ifpe.edu.br.servsimples.util.ServSimplesConstants;
 
 public class ShowAvailabilitiesFragment extends Fragment {
 
@@ -38,9 +39,12 @@ public class ShowAvailabilitiesFragment extends Fragment {
     private static final int GET_USER_OK = 0;
     private static final int DELETE_AVAILABILITY_OK = 2;
     private static final int DELETE_AVAILABILITY_FAIL = 3;
+    private static final int GET_AVAILABILITIES_FOR_PROFESSIONAL_OK = 4;
+    private static final int GET_AVAILABILITIES_FOR_PROFESSIONAL_NOT_OK = 5;
 
     private ProgressDialog mProgressDialog;
     private User mcurrentUser;
+    private String profCPF = null;
     private UIInterfaceWrapper.FragmentUtil mFragmentUtil;
     private ListView mAvailabilitiesListView;
     private List<Availability> availabilities = new ArrayList<>();
@@ -86,25 +90,42 @@ public class ShowAvailabilitiesFragment extends Fragment {
                     Toast.makeText(getContext(), "Não foi possível excluir", Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
                     break;
+
+                case GET_AVAILABILITIES_FOR_PROFESSIONAL_OK:
+                    delay();
+                    mProgressDialog.dismiss();
+                    break;
+
+                case GET_AVAILABILITIES_FOR_PROFESSIONAL_NOT_OK:
+                    delay();
+                    Toast.makeText(getContext(), "Não foi possível recuperar as disponibilidades do profissional",
+                            Toast.LENGTH_SHORT).show();
+                    mProgressDialog.dismiss();
+                    break;
             }
         }
     };
 
     public ShowAvailabilitiesFragment() {
+    }
 
+    public ShowAvailabilitiesFragment(Bundle bundle) {
+        profCPF = bundle.getString(ServSimplesConstants.USER_CPF);
     }
 
     public static ShowAvailabilitiesFragment newInstance() {
-        ShowAvailabilitiesFragment fragment = new ShowAvailabilitiesFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new ShowAvailabilitiesFragment();
+    }
+
+    public static ShowAvailabilitiesFragment newInstance(Bundle b) {
+        return new ShowAvailabilitiesFragment(b);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mProgressDialog = DialogUtils.getProgressDialog(getContext(), "Aguarde");
+        mProgressDialog.show();
     }
 
     @Override
@@ -114,12 +135,16 @@ public class ShowAvailabilitiesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_show_availabilities, container, false);
         findViewsById(view);
         setupListeners();
-        registerForContextMenu(mAvailabilitiesListView);
         return view;
     }
 
     private void setupListeners() {
-        mAvailabilitiesListView.setOnItemLongClickListener((parent, view, position, id) -> false);
+        if (profCPF == null) {
+            registerForContextMenu(mAvailabilitiesListView);
+            mAvailabilitiesListView.setOnItemLongClickListener((parent, view, position, id) -> false);
+        } else {
+
+        }
     }
 
     @Override
@@ -182,8 +207,40 @@ public class ShowAvailabilitiesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        retrieveAvailabilityInfo();
+        if (profCPF == null) {
+            retrieveAvailabilityInfo();
+        } else {
+            retrieveProfessionalAvailabilitiesInfo();
+        }
         mProgressDialog.show();
+    }
+
+    private void retrieveProfessionalAvailabilitiesInfo() {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "retrieveProfessionalAvailabilitiesInfo");
+        User professional = new User();
+        professional.setCpf(profCPF);
+
+        AppointmentWrapper appointmentWrapper = new AppointmentWrapper();
+        appointmentWrapper.setClient(PersistHelper.getCurrentUser(getContext()));
+        appointmentWrapper.setProfessional(professional);
+
+        new Thread(() -> ServerManager.getsInstance().getAvailabilitiesForProfessional(
+                appointmentWrapper, new IServerManagerInterfaceWrapper.AvailabilityCallback() {
+                    @Override
+                    public void onSuccess(List<Availability> availabilities) {
+                        availabilityAdapter =
+                                new AvailabilityAdapter(getContext(), availabilities);
+                        mAvailabilitiesListView.setAdapter(availabilityAdapter);
+                        mHandler.sendEmptyMessage(GET_AVAILABILITIES_FOR_PROFESSIONAL_OK);
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+                        mHandler.sendEmptyMessage(GET_AVAILABILITIES_FOR_PROFESSIONAL_NOT_OK);
+                    }
+                }
+        )).start();
     }
 
     private void retrieveAvailabilityInfo() {

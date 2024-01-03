@@ -11,8 +11,10 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import ifpe.edu.br.servsimples.model.Availability;
 import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.model.User;
+import ifpe.edu.br.servsimples.ui.agenda.AppointmentWrapper;
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger;
 import ifpe.edu.br.servsimples.util.ServSimplesConstants;
 import okhttp3.MediaType;
@@ -458,4 +460,40 @@ public class ServerManager implements
                     }
                 });
     }
+
+    @Override
+    public void getAvailabilitiesForProfessional(AppointmentWrapper appointmentWrapper,
+                                                 IServerManagerInterfaceWrapper.AvailabilityCallback callback) {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "getAvailabilitiesForProfessional");
+        mConnectionManager
+                .getServSimplesConnection().create(ServicesInterfaceWrapper.AvailabilityServices.class)
+                .getAvailabilitiesForProfessional(RequestBody.create(MediaType.parse("application/json"),
+                        new Gson().toJson(appointmentWrapper)))
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(@NonNull Call<List<Availability>> call,
+                                           @NonNull Response<List<Availability>> resp) {
+                        if (resp.isSuccessful() && resp.code() == ServSimplesConstants.HTTP_OK) {
+                            ServSimplesAppLogger.d(TAG, "getAvailabilitiesForProfessional(): server code:" + resp.body());
+                            if (resp.body() != null) {
+                                callback.onSuccess(resp.body());
+                            } else {
+                                callback.onFailure("response body is null");
+                            }
+                        } else {
+                            callback.onFailure("server response not ok:" + resp.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<List<Availability>> call,
+                                          @NonNull Throwable t) {
+                        ServSimplesAppLogger.w(TAG, "getAvailabilitiesForProfessional error:"
+                                + t.getMessage());
+                        callback.onFailure("connection error");
+                    }
+                });
+    }
+
 }
