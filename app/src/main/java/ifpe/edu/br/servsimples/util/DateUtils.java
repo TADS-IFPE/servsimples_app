@@ -5,6 +5,11 @@
  */
 package ifpe.edu.br.servsimples.util;
 
+import androidx.fragment.app.FragmentManager;
+
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,5 +61,16 @@ public class DateUtils {
 
     public interface TimePickerCallback {
         void onGet(int hour, int min);
+    }
+
+    public static void getTimeFromDialog(FragmentManager fm, DateUtils.TimePickerCallback callback) {
+        MaterialTimePicker materialTimePicker = new MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H)
+                .setTitleText("Selecione o horário")
+                .build();
+        materialTimePicker.addOnPositiveButtonClickListener(v ->
+                callback.onGet(materialTimePicker.getHour(),
+                        materialTimePicker.getMinute()));
+        materialTimePicker.show(fm, "tag");
     }
 }

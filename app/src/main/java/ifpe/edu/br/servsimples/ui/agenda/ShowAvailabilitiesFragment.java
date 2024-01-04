@@ -25,6 +25,8 @@ import ifpe.edu.br.servsimples.R;
 import ifpe.edu.br.servsimples.managers.IServerManagerInterfaceWrapper;
 import ifpe.edu.br.servsimples.managers.ServerManager;
 import ifpe.edu.br.servsimples.model.Availability;
+import ifpe.edu.br.servsimples.model.Cost;
+import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.model.User;
 import ifpe.edu.br.servsimples.ui.UIInterfaceWrapper;
 import ifpe.edu.br.servsimples.util.DialogUtils;
@@ -45,6 +47,7 @@ public class ShowAvailabilitiesFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     private User mcurrentUser;
     private String profCPF = null;
+    private Long profID = -1L;
     private UIInterfaceWrapper.FragmentUtil mFragmentUtil;
     private ListView mAvailabilitiesListView;
     private List<Availability> availabilities = new ArrayList<>();
@@ -55,6 +58,8 @@ public class ShowAvailabilitiesFragment extends Fragment {
             final int what = message.what;
             switch (what) {
                 case GET_USER_OK:
+                    if (ServSimplesAppLogger.ISLOGABLE)
+                        ServSimplesAppLogger.d(TAG, "GET_USER_OK");
                     delay();
                     mProgressDialog.dismiss();
                     availabilities = mcurrentUser.getAgenda().getAvailabilities();
@@ -70,6 +75,8 @@ public class ShowAvailabilitiesFragment extends Fragment {
                     }
                     break;
                 case GET_USER_NOT_OK:
+                    if (ServSimplesAppLogger.ISLOGABLE)
+                        ServSimplesAppLogger.d(TAG, "GET_USER_NOT_OK");
                     delay();
                     mProgressDialog.dismiss();
                     Toast.makeText(getContext(),
@@ -78,6 +85,8 @@ public class ShowAvailabilitiesFragment extends Fragment {
                     break;
 
                 case DELETE_AVAILABILITY_OK:
+                    if (ServSimplesAppLogger.ISLOGABLE)
+                        ServSimplesAppLogger.d(TAG, "DELETE_AVAILABILITY_OK");
                     delay();
                     availabilities.remove(mAvailabilityPosition);
                     availabilityAdapter.notifyDataSetChanged();
@@ -86,17 +95,24 @@ public class ShowAvailabilitiesFragment extends Fragment {
                     break;
 
                 case DELETE_AVAILABILITY_FAIL:
+                    if (ServSimplesAppLogger.ISLOGABLE)
+                        ServSimplesAppLogger.d(TAG, "DELETE_AVAILABILITY_FAIL");
                     delay();
                     Toast.makeText(getContext(), "Não foi possível excluir", Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
                     break;
 
                 case GET_AVAILABILITIES_FOR_PROFESSIONAL_OK:
+                    if (ServSimplesAppLogger.ISLOGABLE)
+                        ServSimplesAppLogger.d(TAG, "GET_AVAILABILITIES_FOR_PROFESSIONAL_OK");
                     delay();
                     mProgressDialog.dismiss();
+                    setupListeners();
                     break;
 
                 case GET_AVAILABILITIES_FOR_PROFESSIONAL_NOT_OK:
+                    if (ServSimplesAppLogger.ISLOGABLE)
+                        ServSimplesAppLogger.d(TAG, "GET_AVAILABILITIES_FOR_PROFESSIONAL_NOT_OK");
                     delay();
                     Toast.makeText(getContext(), "Não foi possível recuperar as disponibilidades do profissional",
                             Toast.LENGTH_SHORT).show();
@@ -109,8 +125,21 @@ public class ShowAvailabilitiesFragment extends Fragment {
     public ShowAvailabilitiesFragment() {
     }
 
+    private Service mCurrentService;
     public ShowAvailabilitiesFragment(Bundle bundle) {
         profCPF = bundle.getString(ServSimplesConstants.USER_CPF);
+        profID = bundle.getLong(ServSimplesConstants.USER_ID);
+
+        Cost cost = new Cost();
+        cost.setValue(bundle.getString(ServSimplesConstants.SERVICE_COST_VALUE));
+        cost.setTime(bundle.getString(ServSimplesConstants.SERVICE_COST_TIME));
+
+        mCurrentService = new Service();
+        mCurrentService.setId(bundle.getLong(ServSimplesConstants.SERVICE_ID, -1));
+        mCurrentService.setCategory(bundle.getString(ServSimplesConstants.SERVICE_CATEGORY));
+        mCurrentService.setName(bundle.getString(ServSimplesConstants.SERVICE_NAME));
+        mCurrentService.setDescription(bundle.getString(ServSimplesConstants.SERVICE_DESCRIPTION));
+        mCurrentService.setCost(cost);
     }
 
     public static ShowAvailabilitiesFragment newInstance() {
@@ -140,10 +169,23 @@ public class ShowAvailabilitiesFragment extends Fragment {
 
     private void setupListeners() {
         if (profCPF == null) {
+            if (ServSimplesAppLogger.ISLOGABLE)
+                ServSimplesAppLogger.d(TAG, "setupListeners: remove availability");
             registerForContextMenu(mAvailabilitiesListView);
             mAvailabilitiesListView.setOnItemLongClickListener((parent, view, position, id) -> false);
         } else {
-
+            if (ServSimplesAppLogger.ISLOGABLE)
+                ServSimplesAppLogger.d(TAG, "setupListeners: appointment");
+            mAvailabilitiesListView.setOnItemClickListener((parent, view, position, id) -> {
+                if (availabilities.get(position).getState() != Availability.AVAILABLE) {
+                    Toast.makeText(getContext(), "Este horário já está reservado, tente outro",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Fragment appointmentFragment =
+                        AppointmentFragment.newInstance(availabilities.get(position), profCPF, profID, mCurrentService);
+                mFragmentUtil.openFragment(appointmentFragment, true);
+            });
         }
     }
 
@@ -228,9 +270,10 @@ public class ShowAvailabilitiesFragment extends Fragment {
         new Thread(() -> ServerManager.getsInstance().getAvailabilitiesForProfessional(
                 appointmentWrapper, new IServerManagerInterfaceWrapper.AvailabilityCallback() {
                     @Override
-                    public void onSuccess(List<Availability> availabilities) {
+                    public void onSuccess(List<Availability> availabilitiesFromServer) {
+                        availabilities = availabilitiesFromServer;
                         availabilityAdapter =
-                                new AvailabilityAdapter(getContext(), availabilities);
+                                new AvailabilityAdapter(getContext(), availabilitiesFromServer);
                         mAvailabilitiesListView.setAdapter(availabilityAdapter);
                         mHandler.sendEmptyMessage(GET_AVAILABILITIES_FOR_PROFESSIONAL_OK);
                     }

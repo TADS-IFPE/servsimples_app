@@ -52,10 +52,20 @@ public class AgendaHolderActivity extends AppCompatActivity
                 Bundle b = new Bundle();
                 Intent i = getIntent();
                 String profCPF = i.getStringExtra(ServSimplesConstants.USER_CPF);
+                long profID = i.getLongExtra(ServSimplesConstants.USER_ID, -1);
                 if (profCPF == null) {
                     ServSimplesAppLogger.e(TAG, "proffessional cpf is null");
                 }
                 b.putString(ServSimplesConstants.USER_CPF, profCPF);
+                b.putLong(ServSimplesConstants.USER_ID, profID);
+
+                b.putLong(ServSimplesConstants.SERVICE_ID, i.getLongExtra(ServSimplesConstants.SERVICE_ID, -1));
+                b.putString(ServSimplesConstants.SERVICE_CATEGORY, i.getStringExtra(ServSimplesConstants.SERVICE_CATEGORY));
+                b.putString(ServSimplesConstants.SERVICE_NAME, i.getStringExtra(ServSimplesConstants.SERVICE_NAME));
+                b.putString(ServSimplesConstants.SERVICE_DESCRIPTION, i.getStringExtra(ServSimplesConstants.SERVICE_DESCRIPTION));
+                b.putString(ServSimplesConstants.SERVICE_COST_VALUE, i.getStringExtra(ServSimplesConstants.SERVICE_COST_VALUE));
+                b.putString(ServSimplesConstants.SERVICE_COST_TIME, i.getStringExtra(ServSimplesConstants.SERVICE_COST_TIME));
+
                 Fragment showProfAvailabilities = ShowAvailabilitiesFragment.newInstance(b);
                 openFragment(showProfAvailabilities, false);
                 break;

@@ -26,7 +26,8 @@ import retrofit2.Response;
 public class ServerManager implements
         IServerManagerInterfaceWrapper.IUserManager,
         IServerManagerInterfaceWrapper.IServiceManager,
-        IServerManagerInterfaceWrapper.IAvailabilityManager {
+        IServerManagerInterfaceWrapper.IAvailabilityManager,
+        IServerManagerInterfaceWrapper.IAppointmentManager {
 
     private static final String TAG = ServerManager.class.getSimpleName();
     private static ServerManager sInstance;
@@ -496,4 +497,39 @@ public class ServerManager implements
                 });
     }
 
+
+    @Override
+    public void registerAppointment(AppointmentWrapper appointmentWrapper,
+                                    IServerManagerInterfaceWrapper.AppointmentCallback callback) {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "registerAppointment");
+        mConnectionManager.getServSimplesConnection()
+                .create(ServicesInterfaceWrapper.AppointmentServices.class)
+                .registerAppointment(RequestBody.create(MediaType.parse("application/json"),
+                        new Gson().toJson(appointmentWrapper)))
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Boolean> call,
+                                           @NonNull Response<Boolean> resp) {
+                        if (resp.isSuccessful() && resp.code() == ServSimplesConstants.HTTP_OK) {
+                            ServSimplesAppLogger.d(TAG, "registerAppointment(): server code:" + resp.body());
+                            if (resp.body() != null) {
+                                callback.onSuccess();
+                            } else {
+                                callback.onFailure();
+                            }
+                        } else {
+                            callback.onFailure();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Boolean> call,
+                                          @NonNull Throwable t) {
+                        ServSimplesAppLogger.w(TAG, "registerAppointment error:"
+                                + t.getMessage());
+                        callback.onFailure();
+                    }
+                });
+    }
 }

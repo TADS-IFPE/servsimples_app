@@ -165,7 +165,7 @@ public class RegisterAvailabilityFragment extends Fragment {
         mTvLabel.setText("Hora início:");
         mTvValue.setText(mSelectedStartTimeFormatted);
         mBtSelect.setText("Escolher");
-        mBtSelect.setOnClickListener(v -> getTimeFromDialog((hour, min) -> {
+        mBtSelect.setOnClickListener(v -> DateUtils.getTimeFromDialog(getParentFragmentManager(), (hour, min) -> {
             mSelectedStartTimeFormatted = DateUtils.getTimeFormatString(hour, min);
             mTvValue.setText(mSelectedStartTimeFormatted);
         }));
@@ -191,7 +191,7 @@ public class RegisterAvailabilityFragment extends Fragment {
         mTvLabel.setText("Hora término:");
         mTvValue.setText(mSelectedEndTimeFormatted);
         mBtSelect.setText("Escolher");
-        mBtSelect.setOnClickListener(v -> getTimeFromDialog((hour, min) -> {
+        mBtSelect.setOnClickListener(v -> DateUtils.getTimeFromDialog(getParentFragmentManager(), (hour, min) -> {
                     mSelectedEndTimeFormatted = DateUtils.getTimeFormatString(hour, min);
                     mTvValue.setText(mSelectedEndTimeFormatted);
                 }
@@ -263,17 +263,6 @@ public class RegisterAvailabilityFragment extends Fragment {
                     mTvValue.setText(mSelectedDateFormatted);
                 });
         materialDatePicker.show(getParentFragmentManager(), "tag");
-    }
-
-    private void getTimeFromDialog(DateUtils.TimePickerCallback callback) {
-        MaterialTimePicker materialTimePicker = new MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .setTitleText("Selecione o horário")
-                .build();
-        materialTimePicker.addOnPositiveButtonClickListener(v ->
-                callback.onGet(materialTimePicker.getHour(),
-                        materialTimePicker.getMinute()));
-        materialTimePicker.show(getParentFragmentManager(), "tag");
     }
 
     private void findViewsById(View view) {

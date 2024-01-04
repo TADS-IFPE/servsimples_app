@@ -16,7 +16,7 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/servicedetail_infoservice_card"
+                android:id="@+id/registerappointment_infoservice_card"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_margin="@dimen/card_margin"
@@ -30,7 +30,7 @@
                 app:layout_constraintVertical_bias="0.5">
 
                 <ImageView
-                    android:id="@+id/servicedetail_infoservice_imageview"
+                    android:id="@+id/registerappointment_infoservice_imageview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/servsimples_banner" />

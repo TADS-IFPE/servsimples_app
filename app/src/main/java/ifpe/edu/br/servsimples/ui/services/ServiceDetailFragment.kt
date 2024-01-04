@@ -5,7 +5,6 @@
  */
 package ifpe.edu.br.servsimples.ui.services
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -22,7 +21,6 @@ import ifpe.edu.br.servsimples.managers.IServerManagerInterfaceWrapper
 import ifpe.edu.br.servsimples.managers.ServerManager
 import ifpe.edu.br.servsimples.model.Service
 import ifpe.edu.br.servsimples.model.User
-import ifpe.edu.br.servsimples.ui.UIInterfaceWrapper.FragmentUtil
 import ifpe.edu.br.servsimples.ui.agenda.AgendaHolderActivity
 import ifpe.edu.br.servsimples.util.PersistHelper
 import ifpe.edu.br.servsimples.util.ServSimplesAppLogger
@@ -52,7 +50,7 @@ class ServiceDetailFragment : Fragment() {
     private var mTvProfessionalBio: TextView? = null
 
     // Professional availability
-    private var mTVProfessionalAvailability: TextView? = null;
+    private var mTVProfessionalAvailability: TextView? = null
 
 
     private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
@@ -136,7 +134,18 @@ class ServiceDetailFragment : Fragment() {
         mTVProfessionalAvailability?.setOnClickListener {
             val intent = Intent(activity, AgendaHolderActivity::class.java)
             intent.setAction(ServSimplesConstants.ACTION_SHOW_PROFESSIONAL_AVAILABILITY)
+            //  Professional user info
             intent.putExtra(ServSimplesConstants.USER_CPF, mProfessionalUser?.cpf)
+            intent.putExtra(ServSimplesConstants.USER_ID, mProfessionalUser?.id)
+
+            // Service info
+            intent.putExtra(ServSimplesConstants.SERVICE_ID, mCurrentService.id)
+            intent.putExtra(ServSimplesConstants.SERVICE_CATEGORY, mCurrentService.category)
+            intent.putExtra(ServSimplesConstants.SERVICE_NAME, mCurrentService.name)
+            intent.putExtra(ServSimplesConstants.SERVICE_DESCRIPTION, mCurrentService.description)
+            intent.putExtra(ServSimplesConstants.SERVICE_COST_VALUE, mCurrentService.cost.value)
+            intent.putExtra(ServSimplesConstants.SERVICE_COST_TIME, mCurrentService.cost.time)
+
             startActivity(intent)
         }
     }
@@ -154,13 +163,16 @@ class ServiceDetailFragment : Fragment() {
         mTvProfessionalBio = view?.findViewById(R.id.servicedetail_professionalinfo_tv_bio)
 
         // Availability
-        mTVProfessionalAvailability = view?.findViewById(R.id.servicedetail_professionalinfo_tv_showavailability)
+        mTVProfessionalAvailability =
+            view?.findViewById(R.id.servicedetail_professionalinfo_tv_showavailability)
     }
 
     companion object {
         @JvmStatic
         fun newInstance(service: Service) =
             ServiceDetailFragment().apply {
+                if (ServSimplesAppLogger.ISLOGABLE)
+                    ServSimplesAppLogger.d(TAG, service.toString())
                 mCurrentService = service
             }
     }

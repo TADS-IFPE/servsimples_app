@@ -10,6 +10,7 @@ import java.util.List;
 import ifpe.edu.br.servsimples.model.Availability;
 import ifpe.edu.br.servsimples.model.Service;
 import ifpe.edu.br.servsimples.model.User;
+import ifpe.edu.br.servsimples.ui.agenda.AppointmentFragment;
 import ifpe.edu.br.servsimples.ui.agenda.AppointmentWrapper;
 
 public class IServerManagerInterfaceWrapper {
@@ -52,11 +53,21 @@ public class IServerManagerInterfaceWrapper {
     public interface IAvailabilityManager {
         void registerAvailability(User user,
                                   IServerManagerInterfaceWrapper.RegisterAvailabilityCallback callback);
+
         void deleteAvailability(User user,
-                                  IServerManagerInterfaceWrapper.RegisterAvailabilityCallback callback);
+                                IServerManagerInterfaceWrapper.RegisterAvailabilityCallback callback);
 
         void getAvailabilitiesForProfessional(AppointmentWrapper appointmentWrapper,
                                               IServerManagerInterfaceWrapper.AvailabilityCallback callback);
+    }
+
+    public interface IAppointmentManager {
+        void registerAppointment(AppointmentWrapper appointmentWrapper, AppointmentCallback callback);
+    }
+
+    public interface AppointmentCallback {
+        void onSuccess();
+        void onFailure();
     }
 
     public interface ServerCategoriesCallback {

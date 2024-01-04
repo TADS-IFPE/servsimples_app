@@ -5,6 +5,8 @@
  */
 package ifpe.edu.br.servsimples.util;
 
+import org.jetbrains.annotations.Nullable;
+
 import javax.net.ssl.HttpsURLConnection;
 
 public interface ServSimplesConstants {
@@ -26,6 +28,13 @@ public interface ServSimplesConstants {
     String CURRENT_SERVICE_COST_TIME = "current-service-coast-time";
     String CURRENT_SERVICE_ID = "current-service-id";
     String USER_CPF = "user-cpf-12ewdv";
+    String USER_ID = "user-id-12ewdv";
+    String SERVICE_ID = "service_id343";
+    String SERVICE_CATEGORY = "service_category343";
+    String SERVICE_DESCRIPTION = "service_description23";
+    String SERVICE_COST_VALUE = "service_cost_value324";
+    String SERVICE_COST_TIME = "service_service_cost_timewerwerw";
+    String SERVICE_NAME = "service_name_dfjskf";
 
     int USER_EXISTS = 422;
     int USER_NOT_EXISTS = 416;

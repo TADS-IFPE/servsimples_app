@@ -67,4 +67,9 @@ public abstract class ServicesInterfaceWrapper {
         @POST("api/get/availability/by/professional")
         Call<List<Availability>> getAvailabilitiesForProfessional(@Body RequestBody requestBody);
     }
+
+    interface AppointmentServices {
+        @POST("api/register/user/appointment")
+        Call<Boolean> registerAppointment(@Body RequestBody requestBody);
+    }
 }

@@ -6,11 +6,13 @@
 package ifpe.edu.br.servsimples.ui.agenda;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -62,6 +64,7 @@ public class AvailabilityAdapter extends BaseAdapter {
             holder.mDate = v.findViewById(R.id.tv_availability_item_date_value);
             holder.mStartTime = v.findViewById(R.id.tv_availability_item_starttime_label_value);
             holder.mEndTime = v.findViewById(R.id.tv_availability_item_enttime_value);
+            holder.mBackground = v.findViewById(R.id.iv_availability_backgound);
             v.setTag(holder);
         } else {
             v = view;
@@ -71,6 +74,13 @@ public class AvailabilityAdapter extends BaseAdapter {
         holder.mDate.setText(DateUtils.timestampToDateString(availability.getStartTime()));
         holder.mStartTime.setText(DateUtils.timestampToTimeString(availability.getStartTime()));
         holder.mEndTime.setText(DateUtils.timestampToTimeString(availability.getEndTime()));
+        if (availability.getState() == Availability.AVAILABLE) {
+            holder.mBackground.setBackgroundColor(Color.rgb(147, 197, 93));
+        } else if (availability.getState() == Availability.ON_HOLD) {
+            holder.mBackground.setBackgroundColor(Color.rgb(220, 173, 74));
+        } else if (availability.getState() == Availability.UNAVAILABLE) {
+            holder.mBackground.setBackgroundColor(Color.rgb(207, 93, 117));
+        }
         return v;
     }
 
@@ -78,6 +88,7 @@ public class AvailabilityAdapter extends BaseAdapter {
         private TextView mDate;
         private TextView mStartTime;
         private TextView mEndTime;
+        private ImageView mBackground;
     }
 
     @Override

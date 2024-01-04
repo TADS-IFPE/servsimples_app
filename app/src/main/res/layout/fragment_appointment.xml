@@ -1,14 +1,289 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".ui.agenda.AppointmentFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/registerappointment_infoservice_card"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_margin="@dimen/card_margin"
+                android:outlineAmbientShadowColor="@color/card_forecast_backgound_icon"
+                android:outlineSpotShadowColor="@color/card_forecast_backgound_icon"
+                app:cardCornerRadius="@dimen/card_corner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5">
+
+                <ImageView
+                    android:id="@+id/registerappointment_infoservice_imageview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/servsimples_banner" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Info Serviço"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        android:textSize="@dimen/card_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.500"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.080" />
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_name_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="Nome:"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.067"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/registerappointment_infoservice_tv_title" />
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_name"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textSize="@dimen/card_info"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/registerappointment_infoservice_tv_name_label"
+                        app:layout_constraintStart_toEndOf="@+id/registerappointment_infoservice_tv_name_label"
+                        app:layout_constraintTop_toTopOf="@+id/registerappointment_infoservice_tv_name_label"
+                        tools:text="Nome do serviço" />
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_category_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Categoria:"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintStart_toStartOf="@+id/registerappointment_infoservice_tv_name_label"
+                        app:layout_constraintTop_toBottomOf="@+id/registerappointment_infoservice_tv_name_label" />
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_category"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textSize="@dimen/card_info"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/registerappointment_infoservice_tv_category_label"
+                        app:layout_constraintStart_toEndOf="@+id/registerappointment_infoservice_tv_category_label"
+                        app:layout_constraintTop_toTopOf="@+id/registerappointment_infoservice_tv_category_label"
+                        tools:text="Categoria do serviço" />
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_description_label"
+                        android:layout_width="95dp"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Descrição:"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintStart_toStartOf="@+id/registerappointment_infoservice_tv_description"
+                        app:layout_constraintTop_toBottomOf="@+id/registerappointment_infoservice_tv_category_label" />
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_description"
+                        android:layout_width="290dp"
+                        android:layout_height="137dp"
+                        android:gravity="start|top"
+                        android:justificationMode="inter_word"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/registerappointment_infoservice_tv_category_label"
+                        app:layout_constraintTop_toBottomOf="@+id/registerappointment_infoservice_tv_description_label"
+                        tools:text="Aqui aparecerá a descrição do serviço" />
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_value_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Valor:"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintStart_toStartOf="@+id/registerappointment_infoservice_tv_description"
+                        app:layout_constraintTop_toBottomOf="@+id/registerappointment_infoservice_tv_description" />
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textSize="@dimen/card_info"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/registerappointment_infoservice_tv_value_label"
+                        app:layout_constraintStart_toEndOf="@+id/registerappointment_infoservice_tv_value_label"
+                        app:layout_constraintTop_toTopOf="@+id/registerappointment_infoservice_tv_value_label"
+                        tools:text="R$100,00" />
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_time_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="Tempo:"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintBottom_toBottomOf="@+id/registerappointment_infoservice_tv_value_label"
+                        app:layout_constraintEnd_toStartOf="@+id/registerappointment_infoservice_tv_time"
+                        app:layout_constraintTop_toTopOf="@+id/registerappointment_infoservice_tv_value_label"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/registerappointment_infoservice_tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/card_info"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/registerappointment_infoservice_tv_time_label"
+                        app:layout_constraintEnd_toEndOf="@+id/registerappointment_infoservice_tv_description"
+                        app:layout_constraintTop_toTopOf="@+id/registerappointment_infoservice_tv_time_label"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:text="Hora" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="@dimen/card_corner">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:background="@color/servsimples_banner" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/addavilability_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:text="Agendar Serviço"
+                        android:textAlignment="center"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        android:textSize="@dimen/card_title"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.502"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/addavilability_context"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textAlignment="center"
+                        android:text="Escolha o horário para o serviço"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintEnd_toEndOf="@+id/addavilability_label"
+                        app:layout_constraintStart_toStartOf="@+id/addavilability_label"
+                        app:layout_constraintTop_toBottomOf="@+id/addavilability_label" />
+
+                    <TextView
+                        android:id="@+id/tv_registerappointment_create_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="116dp"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/addavilability_label" />
+
+                    <TextView
+                        android:id="@+id/tv_registerappointment_startime_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_registerappointment_create_label"
+                        app:layout_constraintStart_toEndOf="@+id/tv_registerappointment_create_label"
+                        app:layout_constraintTop_toTopOf="@+id/tv_registerappointment_create_label"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <Button
+                        android:id="@+id/bt_registerappointment_startime_select"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="25dp"
+                        android:text="Início"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_registerappointment_startime_value"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_registerappointment_startime_value" />
+
+                    <TextView
+                        android:id="@+id/tv_registerappointment_endtime_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="48dp"
+                        android:textSize="@dimen/card_info"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_registerappointment_startime_value"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_registerappointment_create_label"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_registerappointment_startime_value" />
+
+                    <Button
+                        android:id="@+id/bt_registerappointment_endtime_select"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fim"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_registerappointment_endtime_value"
+                        app:layout_constraintEnd_toEndOf="@+id/bt_registerappointment_startime_select"
+                        app:layout_constraintTop_toTopOf="@+id/tv_registerappointment_endtime_value" />
+
+                    <Button
+                        android:id="@+id/bt_registerappointment_create_submit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitar atendimento"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.501"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_registerappointment_endtime_select"
+                        app:layout_constraintVertical_bias="0.663" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
