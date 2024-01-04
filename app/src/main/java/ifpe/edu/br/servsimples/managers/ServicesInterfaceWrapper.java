@@ -71,5 +71,8 @@ public abstract class ServicesInterfaceWrapper {
     interface AppointmentServices {
         @POST("api/register/user/appointment")
         Call<Boolean> registerAppointment(@Body RequestBody requestBody);
+
+        @POST("api/register/user/notification/viewed")
+        Call<Boolean> setNotificationViewed(@Body RequestBody requestBody);
     }
 }

@@ -532,4 +532,38 @@ public class ServerManager implements
                     }
                 });
     }
+
+    public void setNotificationViewed(User user,
+                                      IServerManagerInterfaceWrapper.AppointmentCallback callback) {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "setNotificationViewed");
+        mConnectionManager.getServSimplesConnection()
+                .create(ServicesInterfaceWrapper.AppointmentServices.class)
+                .setNotificationViewed(RequestBody.create(MediaType.parse("application/json"),
+                        new Gson().toJson(user)))
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Boolean> call,
+                                           @NonNull Response<Boolean> resp) {
+                        if (resp.isSuccessful() && resp.code() == ServSimplesConstants.HTTP_OK) {
+                            ServSimplesAppLogger.d(TAG, "setNotificationViewed(): server code: " + resp.body());
+                            if (resp.body() != null) {
+                                callback.onSuccess();
+                            } else {
+                                callback.onFailure();
+                            }
+                        } else {
+                            callback.onFailure();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Boolean> call,
+                                          @NonNull Throwable t) {
+                        ServSimplesAppLogger.w(TAG, "setNotificationViewed error:"
+                                + t.getMessage());
+                        callback.onFailure();
+                    }
+                });
+    }
 }

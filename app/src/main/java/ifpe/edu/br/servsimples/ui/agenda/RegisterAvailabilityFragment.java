@@ -22,13 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.timepicker.MaterialTimePicker;
-import com.google.android.material.timepicker.TimeFormat;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import ifpe.edu.br.servsimples.R;
 import ifpe.edu.br.servsimples.managers.IServerManagerInterfaceWrapper;
@@ -266,7 +261,7 @@ public class RegisterAvailabilityFragment extends Fragment {
     }
 
     private void findViewsById(View view) {
-        mTVCardLabel = view.findViewById(R.id.addavilability_label);
+        mTVCardLabel = view.findViewById(R.id.tv_home_notification_card_label);
         mTvLabel = view.findViewById(R.id.tv_addavailability_label);
         mTvValue = view.findViewById(R.id.tv_addavailability_value);
         mBtSelect = view.findViewById(R.id.bt_addavailability_select);

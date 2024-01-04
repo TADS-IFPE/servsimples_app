@@ -59,6 +59,15 @@ public class DateUtils {
         return timeFormat.format(timestamp);
     }
 
+    public static String timestampToDateAndTimeString(long timestamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+        TimeZone timeZone = calendar.getTimeZone();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        dateFormat.setTimeZone(timeZone);
+        return dateFormat.format(calendar.getTime());
+    }
+
     public interface TimePickerCallback {
         void onGet(int hour, int min);
     }

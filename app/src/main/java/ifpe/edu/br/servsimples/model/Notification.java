@@ -9,7 +9,10 @@ public class Notification {
 
     private Long id;
     private String message = "";
-    private String timestamp = "";
+    private boolean isNew = true;
+    private long timestamp;
+    private long clientId;
+    private long professionalId;
 
     public Long getId() {
         return id;
@@ -27,11 +30,19 @@ public class Notification {
         this.message = message;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public boolean isNew() {
+        return this.isNew;
+    }
+
+    public void isNew(boolean isNew) {
+        this.isNew = isNew;
     }
 }

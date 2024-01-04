@@ -188,7 +188,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/addavilability_label"
+                        android:id="@+id/tv_home_notification_card_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
@@ -210,9 +210,9 @@
                         android:textAlignment="center"
                         android:text="Escolha o horário para o serviço"
                         android:textSize="@dimen/card_info"
-                        app:layout_constraintEnd_toEndOf="@+id/addavilability_label"
-                        app:layout_constraintStart_toStartOf="@+id/addavilability_label"
-                        app:layout_constraintTop_toBottomOf="@+id/addavilability_label" />
+                        app:layout_constraintEnd_toEndOf="@+id/tv_home_notification_card_label"
+                        app:layout_constraintStart_toStartOf="@+id/tv_home_notification_card_label"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_home_notification_card_label" />
 
                     <TextView
                         android:id="@+id/tv_registerappointment_create_label"
@@ -222,7 +222,7 @@
                         android:layout_marginTop="116dp"
                         android:textSize="@dimen/card_info"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/addavilability_label" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_home_notification_card_label" />
 
                     <TextView
                         android:id="@+id/tv_registerappointment_startime_value"
