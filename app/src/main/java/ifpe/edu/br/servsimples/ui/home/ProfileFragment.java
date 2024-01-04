@@ -73,6 +73,9 @@ public class ProfileFragment extends Fragment {
     private TextView mTvShowAvailabilities;
     private CardView mAgendaSettingsCard;
 
+    // Appointment
+    private TextView mTvShowAppointment;
+
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message message) {
             final int what = message.what;
@@ -198,6 +201,15 @@ public class ProfileFragment extends Fragment {
         mTvEditService.setOnClickListener(View -> editService());
         mTvAddAvailability.setOnClickListener(v -> addAvailability());
         mTvShowAvailabilities.setOnClickListener(View -> showAvailabilities());
+        mTvShowAppointment.setOnClickListener(View -> showAppointments());
+    }
+
+    private void showAppointments() {
+        if (ServSimplesAppLogger.ISLOGABLE)
+            ServSimplesAppLogger.d(TAG, "showAppointments");
+        Intent intent = new Intent(getContext(), AgendaHolderActivity.class);
+        intent.setAction(ServSimplesConstants.ACTION_SHOW_APPOINTMENTS);
+        startActivity(intent);
     }
 
     private void deleteAvailability() {
@@ -397,5 +409,8 @@ public class ProfileFragment extends Fragment {
         mTvAddAvailability = view.findViewById(R.id.tv_profile_agenda_settings_create_availability);
         mTvShowAvailabilities = view.findViewById(R.id.tv_profile_agenda_settings_show_availabilities);
         mAgendaSettingsCard = view.findViewById(R.id.card_agenda_setting);
+
+        // Appointment
+        mTvShowAppointment = view.findViewById(R.id.tv_profile_agenda_settings_show_appointments);
     }
 }

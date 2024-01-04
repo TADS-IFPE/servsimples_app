@@ -38,13 +38,16 @@
 
             <TextView
                 android:id="@+id/tv_notification_message_value"
-                android:layout_width="356dp"
-                android:layout_height="69dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="292dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="12dp"
+                android:gravity="start|top"
+                android:justificationMode="inter_word"
                 android:textSize="@dimen/card_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_notification_messagelabel"
-                app:layout_constraintTop_toBottomOf="@+id/tv_notification_messagelabel"
-                tools:text="18:30" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_notification_messagelabel" />
 
             <TextView
                 android:id="@+id/tv_notification_date_label"

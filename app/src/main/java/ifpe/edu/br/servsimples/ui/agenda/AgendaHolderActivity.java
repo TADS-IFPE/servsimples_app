@@ -69,6 +69,11 @@ public class AgendaHolderActivity extends AppCompatActivity
                 Fragment showProfAvailabilities = ShowAvailabilitiesFragment.newInstance(b);
                 openFragment(showProfAvailabilities, false);
                 break;
+
+            case ServSimplesConstants.ACTION_SHOW_APPOINTMENTS:
+//                Fragment showAppointments = ShowAvailabilitiesFragment.newInstance();
+//                openFragment(showAppointments, false);
+                break;
         }
     }
 

@@ -383,8 +383,8 @@
                         android:id="@+id/tv_profile_agenda_settings_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
                         android:text="Ajustes de Agenda"
                         android:textColor="@color/servsimples_logo_color_green"
                         android:textSize="@dimen/card_title" />
@@ -411,6 +411,61 @@
 
                     <TextView
                         android:id="@+id/dummy_agenda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_appointment_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/card_margin"
+                android:outlineAmbientShadowColor="@color/card_forecast_backgound_icon"
+                android:outlineSpotShadowColor="@color/card_forecast_backgound_icon"
+                app:cardCornerRadius="@dimen/card_corner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5">
+
+                <ImageView
+                    android:id="@+id/image_profile_appointment_settings_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/servsimples_banner" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_profile_appointment_settings_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:text="Agendamentos"
+                        android:textColor="@color/servsimples_logo_color_green"
+                        android:textSize="@dimen/card_title" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_agenda_settings_show_appointments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Ver solicitações"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/dummy_appointment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp" />
